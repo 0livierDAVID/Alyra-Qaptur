@@ -1,8 +1,16 @@
 # Alyra-Qaptur
 Final project for Alyra
 
+## TODO
+### Back
+* deploy: add doc gen & contract verification Etherscan
+* 
+### Front
+* 
+* 
+
 ## Frontend
-Hardhat install
+### Hardhat install
 ```bash
 $ yarn init
 
@@ -12,9 +20,11 @@ $ npx hardhat
 # Create a JavaScript project
 # add .gitignore
 # add dependencies
+
+$ yarn add hardhat-deploy @nomiclabs/hardhat-etherscan hardhat-gas-reporter solidity-coverage hardhat-docgen
 ```
 
-Dev commands
+### Dev commands
 ```bash
 # compile
 $ npx hardhat compile

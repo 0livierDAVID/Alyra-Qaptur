@@ -1,5 +1,10 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
+require("@nomiclabs/hardhat-etherscan");
+require("hardhat-deploy");
+require("hardhat-gas-reporter")
+require("solidity-coverage")
+require('hardhat-docgen')
 
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
@@ -7,7 +12,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.18",
+  defaultNetwork: "hardhat",
   networks: {
     localhost: {
       url: "http://127.0.0.1:8545",
@@ -28,5 +33,30 @@ module.exports = {
       accounts: [`0x${PRIVATE_KEY}`],
       chainId: 80001
     }
+  },
+  // docgen: {
+  //   path: './docs',
+  //   clear: true
+  // },
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.18"
+      }
+    ]
+  },
+  // etherscan: {
+  //   apiKey: {
+  //     goerli: ETHERSCAN
+  //   }
+  // },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+      1: 0,
+    }
+  },
+  gasReporter: {
+    enabled: true
   }
 };
