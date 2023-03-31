@@ -3,4 +3,4 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ProjectRewardCalculation is Ownable {}
+contract QapturProjectRewardCalculation is Ownable {}
