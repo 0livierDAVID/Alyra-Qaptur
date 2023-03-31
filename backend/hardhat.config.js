@@ -2,9 +2,9 @@ require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("@nomiclabs/hardhat-etherscan");
 require("hardhat-deploy");
-require("hardhat-gas-reporter")
-require("solidity-coverage")
-require('hardhat-docgen')
+require("hardhat-gas-reporter");
+require("solidity-coverage");
+require('hardhat-docgen');
 
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
