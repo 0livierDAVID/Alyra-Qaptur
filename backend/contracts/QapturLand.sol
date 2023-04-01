@@ -6,10 +6,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ERC1155/extensions/ERC1155Burnable.sol";
 import "./ERC1155/extensions/ERC1155Supply.sol";
 
-// TODO:
-// - remove unused extensions in 1155 folder
-
-contract QapturLandProject is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
+/* TODO:
+    - remove unused extensions in 1155 folder
+    - fee calculation? here or market place?
+*/
+contract QapturLand is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     bool initialized;
 
     modifier needInitialization() {
