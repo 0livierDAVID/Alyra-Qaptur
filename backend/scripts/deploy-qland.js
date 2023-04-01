@@ -1,46 +1,113 @@
-require
+const { ethers } = require("hardhat");
 
 async function benchmark() {
+    /* GET SIGNERS */
     const [deployer, addr1, addr2] = await ethers.getSigners();
-
     console.log("Deploying contracts with the account:", deployer.address);
     console.log("Account balance:", (await deployer.getBalance()).toString());
 
-    // QapturLandTemplate
-    const QlandProject = await ethers.getContractFactory("QapturLandProject");
-    const qlandProject = await QlandProject.deploy();
+    const { chainId } = await ethers.provider.getNetwork();
+    console.log("chainId:", chainId);
 
-    console.log("QapturLandProject address:", qlandProject.address);
+    /* GET USDC CONTRACT */
+    let Usdc, usdc, usdcAddr;
+    /* chainId 31337 localhost
+        USDC: (homemade: children please don't do this at home!!!)
+    */
+    if (chainId == 31337) {
+        Usdc = await ethers.getContractFactory("USDCTest");
+        usdc = await Usdc.deploy();
+    } else {
+        //https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
+        //6 decimals
+        switch (chainId) {
+            /* chainId 5 goerli
+                DAI (Aave): 0xBa8DCeD3512925e52FE67b1b5329187589072A55
+                USDC (Aave): 0x65aFADD39029741B3b8f0756952C74678c9cEC93
+            */
+            case 5:
+                usdcAddr = "0x65aFADD39029741B3b8f0756952C74678c9cEC93";
+                break;
 
-    // QapturLandFactory
-    const QlandFactory = await ethers.getContractFactory("QapturLandProjectFactory");
-    const qlandFactory = await QlandFactory.deploy();
+            /* chainId 11155111 sepolia
+                DAI (Aave): 0x68194a729C2450ad26072b3D33ADaCbcef39D574
+                USDC (Aave): 0xda9d4f9b69ac6C22e444eD9aF0CfC043b7a7f53f
+            */
+            case 11155111:
+                usdcAddr = "0xda9d4f9b69ac6C22e444eD9aF0CfC043b7a7f53f";
+                break;
 
-    console.log("QapturLandProjectFactory address:", qlandFactory.address);
+            /* chainId 80001 mumbai
+                DAI (Aave): 0xF14f9596430931E177469715c591513308244e8F
+                USDC (Aave): 0xe9DcE89B076BA6107Bb64EF30678efec11939234
+            */
+            case 80001:
+                usdcAddr = "0xe9DcE89B076BA6107Bb64EF30678efec11939234";
+                break;
 
-    // QapturLandState
-    const QlandState = await ethers.getContractFactory("QapturLandState");
-    const qlandState = await QlandState.deploy();
+            default:
+                console.log("ChainID unknown");
+                return;
+        }
+        usdc = await ethers.getContractAt("IERC20", usdcAddr);
+    }
 
-    console.log("QapturLandState address:", qlandState.address);
+    console.log("USDC address:", usdc.address);
+    console.log("total supply:", ethers.utils.formatUnits(await usdc.totalSupply(), 6), "USDC");
+    console.log("deployer balance:", ethers.utils.formatUnits(await usdc.balanceOf(deployer.address), 6), "USDC");
 
-    //  Update contract addresses in QlandState
-    await qlandState.setContractAddresses(qlandFactory.address, qlandProject.address);
+    return;
+
+
+
+
+
+    // QapturLand template
+    const Qland = await ethers.getContractFactory("QapturLand");
+    const qland = await Qland.deploy();
+
+    console.log("QapturLand address:", qland.address);
+
+    // QapturProjectFactory
+    const Factory = await ethers.getContractFactory("QapturProjectFactory");
+    const factory = await Factory.deploy();
+
+    console.log("QapturProjectFactory address:", factory.address);
+
+    // QLAND Marketplace
+    // const Factory = await ethers.getContractFactory("QapturProjectFactory");
+    // const factory = await Factory.deploy();
+
+    console.log("QapturProjectFactory address:", factory.address);
+
+    // QapturState
+    const QapturState = await ethers.getContractFactory("QapturState");
+    const qapturState = await QapturState.deploy();
+
+    console.log("QapturLandState address:", qapturState.address);
+
+    //  Update contract addresses in QapturState
+    await qapturState.setContractAddresses(factory.address, qland.address);
     console.log("Adresses added");
 
-    // Add QlandState contract address to admin list in QlandFactory
-    await qlandFactory.addAdmin(qlandState.address);
+    /* TODO:
+        - load marketplace
+        - addresses
+    */
+
+    // Add qapturState contract address to admin list in factory
+    await factory.addAdmin(qapturState.address);
     console.log("Admin address added");
 
     console.log("--------");
     console.log("Deploying new smart contract using factory");
 
-    result = await qlandState.createNewProject("My wonderful project", "ffgaizfblsbaia");
-    console.log("contract1:", await qlandState.callStatic.getProjectAddress(1));
+    result = await qapturState.createNewProject("My wonderful project", "ffgaizfblsbaia");
+    console.log("contract1:", await qapturState.callStatic.getProjectAddress(1));
 
     //  callStatis to get the value returned by the function
-    result = await qlandState.createNewProject("My wonderful project 2", "ffgairtylsbaia");
-    const addrQland = await qlandState.callStatic.getProjectAddress(2);
+    result = await qapturState.createNewProject("My wonderful project 2", "ffgairtylsbaia");
+    const addrQland = await qapturState.callStatic.getProjectAddress(2);
     console.log("contract2:", addrQland);
 
     //const qlandCollection = await ethers.getContractAt("contracts/QapturLandProject.sol:QapturLandProject", contractAddress); //OK
@@ -49,7 +116,7 @@ async function benchmark() {
     const qlandCollectionAddr1 = qlandCollection.connect(addr1);
     const qlandCollectionAddr2 = qlandCollection.connect(addr2);
 
-    console.log("father owner:", await qlandFactory.owner());
+    console.log("father owner:", await factory.owner());
     console.log("child owner:", await qlandCollection.owner());
 
     console.log("--------");
