@@ -3,7 +3,7 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./QapturProjectFactory.sol";
-import "./QapturProjectRewardCalculation.sol";
+import "./QapturProjectReward.sol";
 import "./QapturLandMarketplace.sol";
 
 // Uncomment this line to use console.log
@@ -18,7 +18,7 @@ import "hardhat/console.sol";
 contract QapturState is Ownable {
     // Contracts
     QapturProjectFactory factoryContract;
-    QapturProjectRewardCalculation rewardContract;
+    QapturProjectReward rewardContract;
     QapturLandMarketplace qlandMarketplaceContract;
     // QapturCo2Marketplace qlandMarketplaceContract;
 
@@ -26,13 +26,13 @@ contract QapturState is Ownable {
     struct QapturProject {
         address qlandAddr;
         address qco2Addr;
-        uint qlandCurrentSupply;
-        uint qlandTotalSupply;
-        uint qlandPrice;
+        uint totalSupply;
+        uint availableSupply;
+        uint price;
         uint lastDistribution; //year
     }
     mapping(address => bool) _contracts;
-    mapping(uint => QapturProject) _projects;
+    mapping(uint => QapturProject) public projects;
 
     uint projectId;
 
@@ -70,7 +70,7 @@ contract QapturState is Ownable {
 
     function setRewardAddress(address _contractAddr) external onlyOwner {
         require(_contractAddr != address(0), "Address should be defined");
-        rewardContract = QapturProjectRewardCalculation(_contractAddr);
+        rewardContract = QapturProjectReward(_contractAddr);
         _contracts[_contractAddr] = true;
         emit ContractAdressUpdated("Reward", _contractAddr);
     }
@@ -125,10 +125,10 @@ contract QapturState is Ownable {
         uint _qlandPrice
     ) external isInternalContract {
         console.log("AddProjectData", _qlandAddr);
-        _projects[_id] = QapturProject(
+        projects[_id] = QapturProject(
             _qlandAddr,
             _qco2Addr,
-            0,
+            _qlandTotalSupply,
             _qlandTotalSupply,
             _qlandPrice,
             0
@@ -142,33 +142,33 @@ contract QapturState is Ownable {
         );
     }
 
-    function getProjectData(
-        uint _projectId
-    ) external view returns (QapturProject memory) {
-        return _projects[_projectId];
-    }
+    // function getProjectData(
+    //     uint _projectId
+    // ) external view returns (QapturProject memory) {
+    //     return projects[_projectId];
+    // }
 
-    function getQlandAddress(uint _projectId) external view returns (address) {
-        return _projects[_projectId].qlandAddr;
-    }
+    // function getQlandAddress(uint _projectId) external view returns (address) {
+    //     return projects[_projectId].qlandAddr;
+    // }
 
-    function getQco2Address(uint _projectId) external view returns (address) {
-        return _projects[_projectId].qco2Addr;
-    }
+    // function getQco2Address(uint _projectId) external view returns (address) {
+    //     return projects[_projectId].qco2Addr;
+    // }
 
-    function getTotalSupply(uint _projectId) external view returns (uint) {
-        return _projects[_projectId].qlandTotalSupply;
-    }
+    // function getTotalSupply(uint _projectId) external view returns (uint) {
+    //     return projects[_projectId].totalSupply;
+    // }
 
-    function getCurrentSupply(uint _projectId) external view returns (uint) {
-        return _projects[_projectId].qlandCurrentSupply;
+    function getAvailableSupply(uint _projectId) external view returns (uint) {
+        return projects[_projectId].availableSupply;
     }
 
     function updateSupply(
         uint _projectId,
         uint _newValue
     ) external isInternalContract {
-        _projects[_projectId].qlandCurrentSupply = _newValue;
+        projects[_projectId].availableSupply = _newValue;
     }
 
     /*** --------------- ***/
