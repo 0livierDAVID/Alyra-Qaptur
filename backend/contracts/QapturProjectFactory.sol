@@ -22,15 +22,6 @@ contract QapturProjectFactory is Ownable {
     // Events
     event ProjectCollectionsCreated(string name, uint timestamp);
 
-    // /* Admins list */
-    // mapping(address => bool) private _admins;
-
-    // // Modifier
-    // modifier onlyAdmin() {
-    //     require(_admins[msg.sender], "Access restricted");
-    //     _;
-    // }
-
     // Constructor
     constructor(address _stateContractAddr) {
         stateContract = QapturState(_stateContractAddr);
@@ -120,13 +111,4 @@ contract QapturProjectFactory is Ownable {
     //     return (addr);
     // }
 
-    // /* Admins address list update */
-    // function addAdmin(address _admin) external onlyOwner {
-    //     _admins[_admin] = true;
-    // }
-
-    // function removeAdmin(address _admin) external onlyOwner {
-    //     _admins[_admin] = false;
-    // }
-    /* ------------------ */
 }

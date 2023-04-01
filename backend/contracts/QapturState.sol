@@ -142,24 +142,6 @@ contract QapturState is Ownable {
         );
     }
 
-    // function getProjectData(
-    //     uint _projectId
-    // ) external view returns (QapturProject memory) {
-    //     return projects[_projectId];
-    // }
-
-    // function getQlandAddress(uint _projectId) external view returns (address) {
-    //     return projects[_projectId].qlandAddr;
-    // }
-
-    // function getQco2Address(uint _projectId) external view returns (address) {
-    //     return projects[_projectId].qco2Addr;
-    // }
-
-    // function getTotalSupply(uint _projectId) external view returns (uint) {
-    //     return projects[_projectId].totalSupply;
-    // }
-
     function getAvailableSupply(uint _projectId) external view returns (uint) {
         return projects[_projectId].availableSupply;
     }
@@ -170,10 +152,4 @@ contract QapturState is Ownable {
     ) external isInternalContract {
         projects[_projectId].availableSupply = _newValue;
     }
-
-    /*** --------------- ***/
-
-    /*** PROJECT COLLECTIONS ***/
-
-    /*** ------------------- ***/
 }

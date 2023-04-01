@@ -11,7 +11,7 @@ import "./QapturLand.sol";
 import "hardhat/console.sol";
 
 /* TODO:
-    - payable smart contract
+    - payable smart contract?
     - if yes, withdraw possibility
     - address for project share
     - address for transaction fees
@@ -73,7 +73,6 @@ contract QapturLandMarketplace is Ownable {
     }
 
 
-
     /** FUNCTIONS */
     function buyFromInitialSupply(
         uint _projectId,
@@ -103,6 +102,7 @@ contract QapturLandMarketplace is Ownable {
         uint _tokenAmount,
         uint _price
     ) external {
+        // TODO check seller balance
         (address qlandAddress,,,,,) = stateContract.projects(_projectId);
         uint id = findOnSaleTokenIndex(_projectId, _seller, _price);
         uint amountOST = projectOnSaleTokens[_projectId][id].amount;
@@ -131,8 +131,8 @@ contract QapturLandMarketplace is Ownable {
         uint _tokenAmount,
         uint _tokenPrice
     ) external {
-        // check balance
-        // check combination already exists?
+        // TODO check balance
+        // TODO check combination already exists?
         projectOnSaleTokens[_projectId].push(OnSaleToken(payable(msg.sender), _tokenAmount, _tokenPrice));
         emit ItemAddedToMarketplace(msg.sender, _projectId, _tokenAmount, _tokenPrice);
     }

@@ -4,7 +4,7 @@ const priceStableFormat = (amount) => ethers.utils.formatUnits(amount, 6);
 const logPriceStable = (msg, amount) =>
   console.log(msg, priceStableFormat(amount), "USDC");
 
-async function benchmark() {
+async function qland() {
   /* GET SIGNERS */
   const [deployer, addr1, addr2] = await ethers.getSigners();
   console.log("Deploying contracts with the account:", deployer.address);
@@ -59,20 +59,6 @@ async function benchmark() {
   console.log("USDC address:", usdc.address);
   logPriceStable("total supply", await usdc.totalSupply());
   logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
-
-  /** TODO: REMOVE IF NOT NEEDED: IMPLICIT DEPLOYMENT? */
-  // QapturLand template
-  // const Qland = await ethers.getContractFactory("QapturLand");
-  // const qland = await Qland.deploy();
-
-  // console.log("QapturLand address:", qland.address);
-
-  // QapturCo2 template
-  // const Qco2 = await ethers.getContractFactory("QapturCo2");
-  // const qco2 = await Qco2.deploy();
-
-  // console.log("QapturCo2 address:", qco2.address);
-  /** END TODO: REMOVE IF NOT NEEDED: IMPLICIT DEPLOYMENT? */
 
   // QapturState
   const QapturState = await ethers.getContractFactory("QapturState");
@@ -130,8 +116,6 @@ async function benchmark() {
     200,
     20 * 1e6
   );
-  //   [addrQland] = await qapturState.projects(2);
-  //   console.log("contract2:", addrQland);
 
   console.log("--------");
   console.log("Connect to qland smart contract");
@@ -214,80 +198,9 @@ async function benchmark() {
     "adr2 p1 qland balance:",
     (await qland.balanceOf(addr2.address, 0)).toString()
   );
-
-  if (false) {
-    // test based on old logic
-    //const qlandCollection = await ethers.getContractAt("contracts/QapturLand.sol:QapturLand", contractAddress); //OK
-    const qlandCollection = await ethers.getContractAt("QapturLand", addrQland); //OK
-    // const qlandCollectionOwner = qlandCollection.connect(deployer); //default
-    const qlandCollectionAddr1 = qlandCollection.connect(addr1);
-    const qlandCollectionAddr2 = qlandCollection.connect(addr2);
-
-    console.log("father owner:", await factory.owner());
-    console.log("child owner:", await qlandCollection.owner());
-
-    console.log("--------");
-    console.log("Mint tests");
-
-    // supply and batch balance before mint
-    console.log("total supply:", await qlandCollection.totalSupply(0));
-    console.log(
-      "balances:",
-      await qlandCollection.callStatic.balanceOfBatch(
-        [deployer.address, addr1.address, addr1.address],
-        [0, 0, 0]
-      )
-    );
-
-    await qlandCollection.mint(deployer.address, 0, 100, []);
-    await qlandCollection.mint(addr1.address, 0, 100, []);
-    await qlandCollection.mint(addr2.address, 0, 100, []);
-    console.log("mint done");
-
-    // supply and batch balance after mint
-    console.log("total supply:", await qlandCollection.totalSupply(0));
-    console.log(
-      "balances:",
-      await qlandCollection.callStatic.balanceOfBatch(
-        [deployer.address, addr1.address, addr1.address],
-        [0, 0, 0]
-      )
-    );
-
-    console.log("----");
-    console.log("Transfer tests");
-    // Transfer
-    await qlandCollectionAddr1.setApprovalForAll(deployer.address, true);
-    await qlandCollectionAddr2.setApprovalForAll(deployer.address, true);
-    await qlandCollection.safeTransferFrom(
-      addr1.address,
-      deployer.address,
-      0,
-      50,
-      []
-    );
-    await qlandCollection.safeTransferFrom(
-      addr2.address,
-      deployer.address,
-      0,
-      50,
-      []
-    );
-
-    console.log("transfer done");
-    console.log(
-      "balances:",
-      await qlandCollection.callStatic.balanceOfBatch(
-        [deployer.address, addr1.address, addr1.address],
-        [0, 0, 0]
-      )
-    );
-
-    console.log("----");
-  }
 }
 
-benchmark()
+qland()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);
