@@ -130,8 +130,14 @@ async function benchmark() {
     200,
     20 * 1e6
   );
-  [addrQland] = await qapturState.projects(2);
-  console.log("contract2:", addrQland);
+  //   [addrQland] = await qapturState.projects(2);
+  //   console.log("contract2:", addrQland);
+
+  console.log("--------");
+  console.log("Connect to qland smart contract");
+  const qland = await ethers.getContractAt("QapturLand", addrQland); //OK
+  const qlandAdr1 = await qland.connect(addr1);
+  const qlandAdr2 = await qland.connect(addr2);
 
   console.log("--------");
   console.log("Buy initial supply");
@@ -139,19 +145,74 @@ async function benchmark() {
   // approve on ERC20 contract
   const usdcAddr1 = usdc.connect(addr1);
   usdcAddr1.approve(qlandMarketplace.address, 100 * 1e6);
+  logPriceStable(
+    "marketplace allowance for addr1",
+    await usdcAddr1.allowance(addr1.address, qlandMarketplace.address)
+  );
 
   // buy on qlandMarket
   console.log(
     "p1 qland available supply:",
-    await qapturState.getAvailableSupply(1)
+    (await qapturState.getAvailableSupply(1)).toString()
   );
   const qlandMarketplaceAddr1 = qlandMarketplace.connect(addr1);
   logPriceStable("buyer balance", await usdc.balanceOf(addr1.address));
+  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
   await qlandMarketplaceAddr1.buyFromInitialSupply(1, 10);
+  console.log("Sell done");
   logPriceStable("buyer balance", await usdc.balanceOf(addr1.address));
+  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
   console.log(
     "p1 qland available supply:",
-    await qapturState.getAvailableSupply(1)
+    (await qapturState.getAvailableSupply(1)).toString()
+  );
+  console.log(
+    "adr1 p1 qland balance:",
+    (await qland.balanceOf(addr1.address, 0)).toString()
+  );
+
+  console.log("--------");
+  console.log("Add to market place");
+
+  console.log("add");
+  await qlandMarketplaceAddr1.addItemToMarketplace(1, 10, 150);
+  //qland allowance to sc
+  console.log("allowance");
+  await qlandAdr1.setApprovalForAll(qlandMarketplace.address, true);
+
+  console.log("--------");
+  console.log("Buy from market place");
+
+  // approve on ERC20 contract
+  const usdcAddr2 = usdc.connect(addr2);
+  usdcAddr2.approve(qlandMarketplace.address, 450 * 1e6);
+  logPriceStable(
+    "marketplace allowance for addr1",
+    await usdcAddr1.allowance(addr2.address, qlandMarketplace.address)
+  );
+
+  console.log(
+    "p1 qland on sale:",
+    await qlandMarketplace.getProjectItemsOnSale(1)
+  );
+  const qlandMarketplaceAddr2 = qlandMarketplace.connect(addr2);
+  logPriceStable("buyer balance", await usdc.balanceOf(addr2.address));
+  logPriceStable("seller balance", await usdc.balanceOf(addr1.address));
+  await qlandMarketplaceAddr2.buyFromMarketplace(addr1.address, 1, 3, 150);
+  console.log("Sell done");
+  logPriceStable("buyer balance", await usdc.balanceOf(addr1.address));
+  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
+  console.log(
+    "p1 qland on sale:",
+    await qlandMarketplace.getProjectItemsOnSale(1)
+  );
+  console.log(
+    "adr1 p1 qland balance:",
+    (await qland.balanceOf(addr1.address, 0)).toString()
+  );
+  console.log(
+    "adr2 p1 qland balance:",
+    (await qland.balanceOf(addr2.address, 0)).toString()
   );
 
   if (false) {
