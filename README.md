@@ -1,16 +1,23 @@
 # Alyra-Qaptur
+
 Final project for Alyra
 
 ## TODO
+
 ### Back
-* deploy: add doc gen & contract verification Etherscan
-* 
+
+- deploy: add doc gen & contract verification Etherscan
+-
+
 ### Front
-* 
-* 
+
+-
+-
 
 ## Back
+
 ### Hardhat init
+
 ```bash
 $ yarn init
 
@@ -25,6 +32,7 @@ $ yarn add hardhat-deploy @nomiclabs/hardhat-etherscan hardhat-gas-reporter soli
 ```
 
 ### Dev commands
+
 ```bash
 # compile
 $ npx hardhat compile
@@ -39,9 +47,10 @@ $ npx hardhat run scripts/deploy.js --network sepolia
 $ npx hardhat node
 ```
 
+## Front
 
-## Back
-### Front init
+### Front Init
+
 ```bash
 # NextJS
 $ yarn create next-app .
@@ -53,10 +62,13 @@ $ yarn add @rainbow-me/rainbowkit wagmi ethers
 # Material UI
 $ yarn add @mui/material @emotion/react @emotion/styled
 
+# dotenv and Axios
+$ yarn add dotenv axios
 ```
 
 ### Dev commands
+
 ```bash
-# compile
+# launch dev server
 $ yarn dev
 ```
