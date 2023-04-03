@@ -178,7 +178,7 @@ export default function ProjectAddition() {
       </Paper>
       <Paper sx={{ mb: 2, p: 2 }}>
         <h3>
-          Step 3: Generate and upload metadata and create project's
+          Step 3: Generate and upload metadata and create project&apos;s
           smart-contracts
         </h3>
         <Button onClick={uploadMetadata} variant="contained">
