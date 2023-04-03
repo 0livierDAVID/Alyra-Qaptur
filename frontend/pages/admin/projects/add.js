@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Head from "next/head";
 import axios from "axios";
 import { Inter } from "next/font/google";
 import {
@@ -20,7 +21,7 @@ export default function ProjectAddition() {
   const [imgFile, setImgFile] = useState("");
 
   const onProjectIdChange = (evt) => {
-    setImgFile(evt.target.files[0]);
+    setImgFile(evt.target.value);
   };
 
   const onFileChange = (evt) => {
@@ -125,21 +126,28 @@ export default function ProjectAddition() {
 
   return (
     <Layout>
+      <Head>
+        <title>New project deployement - Qaptur</title>
+      </Head>
       <Typography variant="h4" component="h1">
         Deploy a new project
       </Typography>
       <Paper sx={{ mb: 2, p: 2 }}>
-        <h3>Step 0: Check IPFS authentication</h3>
+        <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+          Step 0: Check IPFS authentication
+        </Typography>
         <Button onClick={checkAuth} variant="contained">
           Check
         </Button>
       </Paper>
       <Paper sx={{ mb: 2, p: 2 }}>
-        <h3>Step 1: Select a project in the list</h3>
-        <p>
+        <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+          Step 1: Select a project in the list
+        </Typography>
+        <Typography variant="body2" component="p" sx={{ mb: 2 }}>
           New project data are stored in a JavaScript file for the purpose of
           the demo. In the reality, they will be available in a database.
-        </p>
+        </Typography>
         <form
           encType="multipart/form-data"
           onSubmit={() => {
@@ -163,7 +171,9 @@ export default function ProjectAddition() {
         </form>
       </Paper>
       <Paper sx={{ mb: 2, p: 2 }}>
-        <h3>Step 2: Upload image</h3>
+        <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+          Step 2: Upload image
+        </Typography>
         <form
           encType="multipart/form-data"
           onSubmit={() => {
@@ -177,10 +187,10 @@ export default function ProjectAddition() {
         </form>
       </Paper>
       <Paper sx={{ mb: 2, p: 2 }}>
-        <h3>
+        <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Step 3: Generate and upload metadata and create project&apos;s
           smart-contracts
-        </h3>
+        </Typography>
         <Button onClick={uploadMetadata} variant="contained">
           Create project
         </Button>
