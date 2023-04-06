@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Head from "next/head";
 import axios from "axios";
+import { ethers } from "ethers";
+import { useSigner } from "wagmi";
 import { Inter } from "next/font/google";
 import {
   Typography,
@@ -8,27 +10,46 @@ import {
   FormControl,
   InputLabel,
   Select,
+  TextField,
   MenuItem,
   Input,
   Button,
+  Alert,
 } from "@mui/material";
+import { useContracts } from "@/context/contractsContext";
 import Layout from "@/components/Layout";
+import projects from "@/data/data";
+import useContractsAvailable from "@/hooks/useContractsAvailable";
+import {
+  getIpfsUrl,
+  prepareImageMetadata,
+  prepareProjectMetadata,
+} from "@/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function ProjectAddition() {
+  const contractsAvailable = useContractsAvailable();
+  const { factory } = useContracts();
+  const { data: signer } = useSigner();
+
+  const [notif0, setNotif0] = useState(null);
+  const [notif1, setNotif1] = useState(null);
+  const [notif2, setNotif2] = useState(null);
+  const [notif3, setNotif3] = useState(null);
+
   const [projectId, setProjectId] = useState("");
+  const [projectData, setProjectData] = useState({});
+
   const [imgFile, setImgFile] = useState("");
+  const [imgHash, setImgHash] = useState("");
 
-  const onProjectIdChange = (evt) => {
-    setImgFile(evt.target.value);
-  };
-
-  const onFileChange = (evt) => {
-    setImgFile(evt.target.files[0]); //file object
-  };
+  const [jsonHash, setJsonHash] = useState("");
+  const [supply, setSupply] = useState("");
+  const [price, setPrice] = useState("");
 
   const checkAuth = async () => {
+    setNotif1(null);
     try {
       const formData = new FormData();
       formData.append("file", imgFile);
@@ -41,29 +62,30 @@ export default function ProjectAddition() {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
         },
       });
-      // console.log(resFile);
-      console.log(resFile.data.message);
+      setNotif0({ type: "success", msg: resFile.data.message });
     } catch (error) {
-      console.log("Auth to IPFS: ");
-      console.log(error);
+      setNotif0({ type: "error", msg: `Auth to IPFS: ${error}` });
     }
+  };
+
+  const selectProjectData = async (evt) => {
+    const jsonId = Number(evt.target.value) - 1;
+    setProjectId(evt.target.value);
+    setProjectData(projects[jsonId]);
+    setNotif1({
+      type: "success",
+      msg: `Project ${evt.target.value} data loaded`,
+    });
   };
 
   const uploadImage = async () => {
     if (imgFile) {
+      setNotif2(null);
       try {
-        const myfieldvalue = "zut";
         const formData = new FormData();
         formData.append("file", imgFile);
-        const metadata = JSON.stringify({
-          name: "file name",
-          keyvalues: {
-            altname: "MickeyMouse",
-            description: "A famous mouse",
-            customKey: myfieldvalue,
-            customKey2: "customValue2",
-          },
-        });
+
+        const metadata = prepareImageMetadata(projectData);
         formData.append("pinataMetadata", metadata);
 
         const resFile = await axios({
@@ -75,37 +97,24 @@ export default function ProjectAddition() {
             "Content-Type": "multipart/form-data",
           },
         });
-        // console.log(resFile);
-        console.log("IpfsHash:", resFile.data.IpfsHash);
-        console.log("PinSize:", resFile.data.PinSize);
+        setImgHash(resFile.data.IpfsHash);
+        setNotif2({
+          type: "success",
+          msg: `IpfsHash: ${resFile.data.IpfsHash} | PinSize: ${resFile.data.PinSize}`,
+        });
       } catch (error) {
-        console.log("Error sending File to IPFS: ");
-        console.log(error);
+        setNotif2({
+          type: "error",
+          msg: `Error sending File to IPFS: ${error}`,
+        });
       }
     }
   };
 
   const uploadMetadata = async () => {
+    setNotif3(null);
     try {
-      const myfieldvalue = "prout";
-      const data = JSON.stringify({
-        pinataOptions: {
-          cidVersion: 1,
-        },
-        pinataMetadata: {
-          name: "testing",
-          keyvalues: {
-            customKey: myfieldvalue,
-            customKey2: "customValue2",
-          },
-        },
-        pinataContent: {
-          somekey: myfieldvalue,
-          hello: "Good",
-          Ola: "Nice",
-        },
-      });
-
+      const data = prepareProjectMetadata(projectData, imgHash);
       const resFile = await axios({
         method: "post",
         url: "https://api.pinata.cloud/pinning/pinJSONToIPFS",
@@ -115,12 +124,47 @@ export default function ProjectAddition() {
           "Content-Type": "application/json",
         },
       });
-      // console.log(resFile);
-      console.log("IpfsHash:", resFile.data.IpfsHash);
-      console.log("PinSize:", resFile.data.PinSize);
+      console.log(resFile.data.IpfsHash);
+      setJsonHash(resFile.data.IpfsHash);
+      createProjectSC();
     } catch (error) {
-      console.log("Error sending File to IPFS: ");
-      console.log(error);
+      setNotif3({
+        type: "error",
+        msg: `Error sending File to IPFS: ${error}`,
+      });
+    }
+  };
+
+  const createProjectSC = async () => {
+    if (!contractsAvailable) return;
+    try {
+      const parameters = [
+        projectData.name, // name
+        getIpfsUrl(jsonHash), // json data on IPFS
+        supply, // max supply
+        price, // project share price
+      ];
+      console;
+      const contract = new ethers.Contract(
+        factory.address,
+        factory.abi,
+        signer
+      );
+      const transaction = await contract.createNewProject(...parameters);
+      transaction.wait();
+      console.log(transaction);
+
+      // transaction hash
+      // smart contracts
+      setNotif3({
+        type: "success",
+        msg: `IpfsHash: ${jsonHash}  | transaction hash: ${transaction.hash}`,
+      });
+    } catch (error) {
+      setNotif3({
+        type: "error",
+        msg: `Error during smart contracts creation. ${error}`,
+      });
     }
   };
 
@@ -132,6 +176,7 @@ export default function ProjectAddition() {
       <Typography variant="h4" component="h1">
         Deploy a new project
       </Typography>
+      {/* Step0 */}
       <Paper sx={{ mb: 2, p: 2 }}>
         <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Step 0: Check IPFS authentication
@@ -139,7 +184,13 @@ export default function ProjectAddition() {
         <Button onClick={checkAuth} variant="contained">
           Check
         </Button>
+        {notif0 && (
+          <Alert sx={{ mt: 1 }} severity={notif0.type}>
+            {notif0.msg}
+          </Alert>
+        )}
       </Paper>
+      {/* Step1 */}
       <Paper sx={{ mb: 2, p: 2 }}>
         <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Step 1: Select a project in the list
@@ -161,7 +212,7 @@ export default function ProjectAddition() {
               id="project-select"
               value={projectId}
               label="Project"
-              onChange={onProjectIdChange}
+              onChange={selectProjectData}
             >
               <MenuItem value={1}>Project 1</MenuItem>
               <MenuItem value={2}>Project 2</MenuItem>
@@ -169,7 +220,13 @@ export default function ProjectAddition() {
             </Select>
           </FormControl>
         </form>
+        {notif1 && (
+          <Alert sx={{ mt: 1 }} severity={notif1.type}>
+            {notif1.msg}
+          </Alert>
+        )}
       </Paper>
+      {/* Step2 */}
       <Paper sx={{ mb: 2, p: 2 }}>
         <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Step 2: Upload image
@@ -180,20 +237,60 @@ export default function ProjectAddition() {
             sendFileToIPFS;
           }}
         >
-          <Input onChange={onFileChange} type="file" />
+          <Input
+            onChange={(evt) => setImgFile(evt.target.files[0])}
+            type="file"
+          />
           <Button onClick={uploadImage} variant="contained">
             Upload
           </Button>
         </form>
+        {notif2 && (
+          <Alert sx={{ mt: 1 }} severity={notif2.type}>
+            {notif2.msg}
+          </Alert>
+        )}
       </Paper>
+      {/* Step3 */}
       <Paper sx={{ mb: 2, p: 2 }}>
         <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Step 3: Generate and upload metadata and create project&apos;s
           smart-contracts
         </Typography>
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <TextField
+            placeholder="Set value"
+            id="outlined-number"
+            label="Number of shares"
+            type="number"
+            value={supply}
+            onChange={(evt) => setSupply(evt.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <TextField
+            placeholder="Set value"
+            id="outlined-number"
+            label="Share unit price"
+            type="number"
+            value={price}
+            onChange={(evt) => setPrice(evt.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </FormControl>
         <Button onClick={uploadMetadata} variant="contained">
           Create project
         </Button>
+        {notif3 && (
+          <Alert sx={{ mt: 1 }} severity={notif3.type}>
+            {notif3.msg}
+          </Alert>
+        )}
       </Paper>
     </Layout>
   );

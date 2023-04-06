@@ -11,6 +11,7 @@ import "hardhat/console.sol";
 
 /** TODO: 
     - add QC02 import and contract deployement
+    - add function to update uri
 */
 
 contract QapturProjectFactory is Ownable {
@@ -20,45 +21,40 @@ contract QapturProjectFactory is Ownable {
     address qco2MarketplaceAddress;
 
     // Events
-    event ProjectCollectionsCreated(string name, uint timestamp);
+    event ProjectCollectionsCreated(address qland, address qco2, uint timestamp);
 
     // Constructor
-    constructor(address _stateContractAddr) {
+    constructor(address _stateContractAddr, address _qlandMarketplaceAddress/*, address _qco2MarketplaceAddress*/) {
         stateContract = QapturState(_stateContractAddr);
+        qlandMarketplaceAddress = _qlandMarketplaceAddress;
+        // qco2MarketplaceAddress = _qco2MarketplaceAddress;
     }
 
     // Deploy a new contract
     function createNewProject(
         string calldata _name,
-        string calldata _uri,
+        string calldata _jsonUrl,
         uint _maxSupply,
         uint _qlandPrice
     ) external onlyOwner {
-        uint id = stateContract.getNewId();
-
-        address addrQland = deployQlandSmartContract(_name, _uri);
+        address addrQland = deployQlandSmartContract(_name);
         address addrCo2 = address(0);
-        //address addrCo2 = deployQco2SmartContract(_name, _uri);
+        //address addrCo2 = deployQco2SmartContract(_name);
 
         stateContract.addProjectData(
-            id,
             addrQland,
             addrCo2,
             _maxSupply,
-            _qlandPrice
+            _qlandPrice,
+            _jsonUrl
         );
-        emit ProjectCollectionsCreated(_name, block.timestamp);
+        emit ProjectCollectionsCreated(addrQland, addrCo2, block.timestamp);
     }
 
     // Deploy a new qland smart contract
     function deployQlandSmartContract(
-        string calldata _name,
-        string calldata _uri
+        string calldata _name
     ) internal returns (address) {
-        if (qlandMarketplaceAddress == address(0)) {
-            qlandMarketplaceAddress = stateContract
-                .getQlandMarketplaceAddress();
-        }
         require(
             qlandMarketplaceAddress != address(0),
             "Marketplace address is not configured"
@@ -74,8 +70,7 @@ contract QapturProjectFactory is Ownable {
             }
         }
         QapturLand projectContract = QapturLand(addr);
-        // Child contract init
-        projectContract.init(_uri);
+
         // Give ownership to the marketplace
         projectContract.transferOwnership(qlandMarketplaceAddress);
         return (addr);
@@ -84,11 +79,7 @@ contract QapturProjectFactory is Ownable {
     // Deploy a new qcO2 smart contract
     // function deployQco2SmartContract(
     //     string calldata _name,
-    //     string calldata _uri
     // ) internal returns (address) {
-    //     if (qco2MarketplaceAddress == address(0)) {
-    //         qco2MarketplaceAddress = stateContract.getQco2MarketplaceAddress();
-    //     }
     //     require(
     //         qco2MarketplaceAddress != address(0),
     //         "Marketplace address is not configured"
@@ -104,8 +95,6 @@ contract QapturProjectFactory is Ownable {
     //         }
     //     }
     //     QapturCo2 projectContract = QapturCo2(addr);
-    //     // Child contract init
-    //     projectContract.init(_uri);
     //     // Give ownership to the marketplace
     //     projectContract.transferOwnership(qco2MarketplaceAddress);
     //     return (addr);

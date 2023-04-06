@@ -13,8 +13,8 @@ const projects = [
     speciesPlanted: "E. pellita (evergreen), A. mangium (evergreen)",
     IGBP: "EBF",
     annualCreditsExpected: 139489,
-    startDate: 15 / 09 / 2016,
-    endDate: 14 / 09 / 2046,
+    startDate: "15/09/2016",
+    endDate: "14/09/2046",
     surface: 134732,
     cobenefits: [
       [3, "good health and well-being"],
@@ -77,8 +77,8 @@ const projects = [
     speciesPlanted: "pins maritimes, bouleaux et chênes tauzin",
     IGBP: "MF",
     annualCreditsExpected: 170,
-    startDate: 08 / 11 / 2021,
-    endDate: 08 / 11 / 2051,
+    startDate: "08/11/2021",
+    endDate: "08/11/2051",
     surface: 43,
     cobenefits: [
       [3, "climate action"],

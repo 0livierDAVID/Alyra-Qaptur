@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Grid,
   Card,
@@ -11,8 +12,14 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
+import { formatUSDC } from "@/utils";
 
-export default function ProjectInvest() {
+export default function ProjectInvest({
+  supply,
+  price,
+  attributes: { annualCreditsExpected },
+}) {
+  const [nbShare, setNbShare] = useState();
   return (
     <Grid item xs={12} md={6}>
       <Card variant="outlined">
@@ -27,6 +34,8 @@ export default function ProjectInvest() {
               id="outlined-number"
               label="Number of shares"
               type="number"
+              value={nbShare}
+              onChange={(evt) => setNbShare(evt.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -35,17 +44,18 @@ export default function ProjectInvest() {
           <List>
             <ListItem>
               <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                Available share:
+                Available share: {supply}
               </Typography>
             </ListItem>
             <ListItem>
               <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                Total price:
+                Total price: {nbShare * formatUSDC(price) || 0} USDC
               </Typography>
             </ListItem>
             <ListItem>
               <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                Estimated yearly carbon credits emission:
+                Estimated yearly carbon credits emission:{" "}
+                {annualCreditsExpected}
               </Typography>
             </ListItem>
           </List>

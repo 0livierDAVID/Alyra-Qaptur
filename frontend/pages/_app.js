@@ -1,13 +1,13 @@
+/** WEB3: RainbowKit, WAGMI */
 import "@rainbow-me/rainbowkit/styles.css";
 import {
-  getDefaultWallets,
   connectorsForWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { hardhat, polygonMumbai, goerli, sepolia } from "wagmi/chains";
-// import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -16,16 +16,8 @@ import "@/styles/globals.css";
 
 const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
-  [
-    //alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
-    publicProvider(),
-  ]
+  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
-
-// const { connectors } = getDefaultWallets({
-//   appName: "Qaptur",
-//   chains,
-// });
 
 const connectors = connectorsForWallets([
   {
@@ -41,6 +33,12 @@ const wagmiClient = createClient({
   provider,
 });
 
+/** CONTEXT: user, contracts, projects */
+import { UserProvider } from "@/context/userContext";
+import { ContractsProvider } from "@/context/contractsContext";
+import { ProjectsProvider } from "@/context/projectsContext";
+
+/** STYLE */
 // https://muhimasri.com/blogs/how-to-customize-theme-and-colors-in-material-ui/
 const theme = createTheme({
   status: {
@@ -73,12 +71,18 @@ export default function App({ Component, pageProps }) {
     <ThemeProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains} initialChain={polygonMumbai}>
-          <style jsx global>{`
-            html {
-              font-family: ${montserrat.style.fontFamily};
-            }
-          `}</style>
-          <Component {...pageProps} />
+          <UserProvider>
+            <ContractsProvider>
+              <ProjectsProvider>
+                <style jsx global>{`
+                  html {
+                    font-family: ${montserrat.style.fontFamily};
+                  }
+                `}</style>
+                <Component {...pageProps} />
+              </ProjectsProvider>
+            </ContractsProvider>
+          </UserProvider>
         </RainbowKitProvider>
       </WagmiConfig>
     </ThemeProvider>
