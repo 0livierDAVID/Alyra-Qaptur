@@ -70,7 +70,7 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains} initialChain={polygonMumbai}>
+        <RainbowKitProvider chains={chains}>
           <UserProvider>
             <ContractsProvider>
               <ProjectsProvider>
