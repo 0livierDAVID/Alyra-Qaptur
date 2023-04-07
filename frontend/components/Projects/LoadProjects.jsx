@@ -57,7 +57,7 @@ export default function LoadProjects() {
         dispatch({
           type: "add",
           project: {
-            id,
+            id: id.toNumber(),
             name,
             description,
             image,
