@@ -15,6 +15,7 @@ export default function Project() {
   const { id } = router.query;
   const projectName = "Project name";
   const { array: projects } = useProjects();
+  console.log(projects);
   const [project] = projects.filter((project) => project.id == id);
 
   // check valid id: else come back later

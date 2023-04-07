@@ -33,13 +33,16 @@ function projectsReducer(projects, action) {
       return { ...projects, array: [...projects.array, action.project] };
     }
     case "updateSupply": {
-      // return projects.map(t => {
-      //   if (t.id === action.task.id) {
-      //     return action.task;
-      //   } else {
-      //     return t;
-      //   }
-      // });
+      return {
+        ...projects,
+        array: projects.array.map((project) => {
+          if (project.id === action.projectId) {
+            return { ...project, availableSupply: action.newSupply };
+          } else {
+            return project;
+          }
+        }),
+      };
     }
     // purge context on disconnect
     case "clear": {

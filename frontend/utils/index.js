@@ -55,6 +55,10 @@ export const prepareProjectMetadata = (projectData, imgHash) => {
   return json;
 };
 
-export const formatUSDC = (price) => {
+export const toUsdc = (price) => {
   return Number(ethers.utils.formatUnits(price, "mwei"));
+};
+
+export const toMwei = (price) => {
+  return ethers.utils.parseUnits(price.toString(), "mwei");
 };
