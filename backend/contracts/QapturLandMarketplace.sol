@@ -11,8 +11,6 @@ import "./QapturLand.sol";
 import "hardhat/console.sol";
 
 /* TODO:
-    - payable smart contract?
-    - if yes, withdraw possibility
     - address for project share
     - address for transaction fees
     - re-entrancy on buy functions?
@@ -103,7 +101,7 @@ contract QapturLandMarketplace is Ownable {
         uint _price
     ) external {
         // TODO check seller balance
-        (address qlandAddress,,,,,,) = stateContract.projects(_projectId);
+        (address qlandAddr,,,,,,) = stateContract.projects(_projectId);
         uint id = findOnSaleTokenIndex(_projectId, _seller, _price);
         uint amountOST = projectOnSaleTokens[_projectId][id].amount;
         require( // check qty available
@@ -117,7 +115,7 @@ contract QapturLandMarketplace is Ownable {
             "insufficient allowance"
         );
         erc20Stable.transferFrom(msg.sender, _seller, totalPrice);
-        QapturLand qland = QapturLand(qlandAddress);
+        QapturLand qland = QapturLand(qlandAddr);
         require( // check approval
             qland.isApprovedForAll(_seller, address(this)),
             "missing approval"

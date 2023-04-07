@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /* TODO:
     - customize for QCO2 specific features
-
 */
 contract QapturCo2 is ERC1155, Ownable, ERC1155Burnable {
 

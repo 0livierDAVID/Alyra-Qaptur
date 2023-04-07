@@ -6,7 +6,8 @@ import "./ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /* TODO:
-    - 
+    - add fees collection
+    - add tracking for reward calculation
 */
 contract QapturLand is ERC1155, Ownable, ERC1155Burnable {
 

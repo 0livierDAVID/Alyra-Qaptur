@@ -52,11 +52,11 @@ contract QapturState is Ownable {
 
     // Events
     // event config
-    event ContractAdressUpdated(string name, address contractAddress); // several events by contract type
+    event ContractAdressUpdated(string name, address contractAddr); // several events by contract type
     event NewProjectDeployed(
         uint id,
-        address qlandAddress,
-        address qco2Address,
+        address qlandAddr,
+        address qco2Addr,
         uint supply,
         uint price
     );
