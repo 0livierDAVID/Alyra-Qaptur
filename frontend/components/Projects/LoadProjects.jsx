@@ -30,7 +30,7 @@ export default function LoadProjects() {
     loadEvents();
   }, [contractsAvailable]);
 
-  const loadProject = async (project) => {
+  const saveOrUpdateProject = async (project) => {
     if (!contractsAvailable) return;
     try {
       const { id, price, supply, qco2Addr, qlandAddr } = project.args;
@@ -39,7 +39,7 @@ export default function LoadProjects() {
       // get json data url from project smart contract
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const { url, availableSupply } = await contract.projects(id);
-      console.log(url, availableSupply);
+      // console.log(url, availableSupply);
 
       // get json from ipfs with axios
       const jsonFile = await axios({
@@ -52,23 +52,37 @@ export default function LoadProjects() {
       const { name, description, image, attributes } = jsonFile.data;
       // console.log(attributes);
 
-      // save project data to context
-      dispatch({
-        type: "add",
-        project: {
-          id,
-          name,
-          description,
-          image,
-          url,
-          qlandAddr,
-          qco2Addr,
-          supply: supply.toNumber(),
-          price: price.toNumber(),
-          availableSupply: availableSupply.toNumber(),
-          attributes,
-        },
-      });
+      if (id > projectsArray.length) {
+        // save project data to context
+        dispatch({
+          type: "add",
+          project: {
+            id,
+            name,
+            description,
+            image,
+            url,
+            qlandAddr,
+            qco2Addr,
+            supply: supply.toNumber(),
+            price: price.toNumber(),
+            availableSupply: availableSupply.toNumber(),
+            attributes,
+          },
+        });
+      } else {
+        const localProject = projectsArray.filter(
+          (project) => project.id === id
+        );
+        if (localProject.availableSupply !== availableSupply.toNumber()) {
+          // update available supply in context
+          dispatch({
+            type: "updateSupply",
+            projectId: id,
+            newSupply: availableSupply,
+          });
+        }
+      }
     } catch (error) {
       setNotif({
         type: "error",
@@ -84,14 +98,14 @@ export default function LoadProjects() {
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const filter = contract.filters.NewProjectDeployed();
       const projects = await contract.queryFilter(filter);
-      // console.log(projects);
+      console.log(projects);
       projects.forEach((project) => {
         const projectId = project.args.id.toNumber();
         // console.log(project);
         // console.log("test", projectId, projectsArray.length);
-        if (projectId > projectsArray.length) {
-          loadProject(project);
-        }
+
+        // store project or update supply if needed
+        saveOrUpdateProject(project);
       });
     } catch (error) {
       setNotif({
