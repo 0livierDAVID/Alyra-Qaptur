@@ -146,6 +146,28 @@ async function qaptur() {
     },
   };
   exportContractData(chainId, jsonContent);
+
+  /** CONTRACT ABI COPY: contract's abi for frontend */
+  const contractsAbi = [
+    "QapturCo2",
+    "QapturLand",
+    "QapturLandMarketplace",
+    "QapturProjectFactory",
+    "QapturProjectReward",
+    "QapturState",
+    "USDCTest",
+  ];
+  contractsAbi.forEach((contract) => {
+    // destination will be created or overwritten by default.
+    fs.copyFile(
+      `./artifacts/contracts/${contract}.sol/${contract}.json`,
+      `../frontend/contracts/${contract}.json`,
+      (err) => {
+        if (err) throw err;
+        console.log(`File ${contract} was copied to destination`);
+      }
+    );
+  });
 }
 
 qaptur()
