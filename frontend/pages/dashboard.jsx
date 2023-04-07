@@ -3,6 +3,8 @@ import { Typography } from "@mui/material";
 import Layout from "@/components/Layout";
 import Boxes from "@/components/Dashboard/Boxes";
 import Assets from "@/components/Dashboard/Assets";
+import LoadUserProjects from "@/components/Dashboard/helper/LoadUserProjects";
+import { useState } from "react";
 
 export default function Dashboard() {
   /** Data
@@ -10,9 +12,20 @@ export default function Dashboard() {
    * - transactions market place filter from or to (address)
    *
    */
+  const [userProjects, setUserProjects] = useState([]);
+
+  const updateUserProjects = (newVal) => {
+    const array = userProjects.push(newVal);
+    setUserProjects(array);
+    console.log(userProjects);
+  };
 
   return (
     <Layout>
+      <LoadUserProjects
+        // userProjects={userProjects}
+        updateUserProjects={updateUserProjects}
+      />
       <Head>
         <title>My dashboasd - Qaptur</title>
       </Head>
