@@ -9,6 +9,7 @@ import {
   Typography,
   CardActions,
   Button,
+  FormControl,
 } from "@mui/material";
 
 export default function ProjectInvest() {
@@ -20,15 +21,17 @@ export default function ProjectInvest() {
           subheader="Invest now or you wille regret it soon!"
         />
         <CardContent>
-          <TextField
-            sx={{ width: "100%" }}
-            id="outlined-number"
-            label="Number of shares"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+          <FormControl fullWidth>
+            <TextField
+              placeholder="Set value"
+              id="outlined-number"
+              label="Number of shares"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </FormControl>
           <List>
             <ListItem>
               <Typography sx={{ fontSize: 14 }} color="text.secondary">

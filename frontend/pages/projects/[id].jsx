@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
 import { Typography, Grid, Box } from "@mui/material";
@@ -11,11 +12,15 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Project() {
   const router = useRouter();
   const { id } = router.query;
+  const projectName = "Project name";
   // check valid id: else come back later
   return (
     <Layout>
+      <Head>
+        <title>{projectName} - Qaptur</title>
+      </Head>
       <Typography variant="h4" component="h1">
-        Project name
+        {projectName}
       </Typography>
       <Grid container spacing={1}>
         <ProjectSummary />
