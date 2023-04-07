@@ -36,7 +36,7 @@ export default function ProjectInvest({
   const buyShares = async () => {
     try {
       if (!nbShare) return;
-      const amount = nbShare * toUsdc(price);
+      const amount = nbShare; /** toUsdc(price)*/
 
       // usdc approval
       const contractUsdc = new Contract(usdc.address, usdc.abi, signer);
@@ -124,7 +124,7 @@ export default function ProjectInvest({
                 sx={{ fontSize: 14, fontWeight: "bold" }}
                 color="text.secondary"
               >
-                Total price: {nbShare * toUsdc(price) || 0} USDC
+                {/* Total price: {nbShare * toUsdc(price) || 0} USDC */}
               </Typography>
             </ListItem>
           </List>
