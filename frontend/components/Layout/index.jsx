@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import LeftMenu from "./LeftMenu";
 import AdminMenu from "./AdminMenu";
+import LoadProjects from "../Projects/LoadProjects";
 import useUserStatus from "@/hooks/useUserStatus";
 
 export default function Layout({ children }) {
@@ -26,6 +27,7 @@ export default function Layout({ children }) {
             p: 2,
           }}
         >
+          <LoadProjects />
           {children}
         </Box>
       </Box>

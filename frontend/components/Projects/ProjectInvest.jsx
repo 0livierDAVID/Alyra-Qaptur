@@ -15,21 +15,17 @@ import {
   Button,
   FormControl,
 } from "@mui/material";
-import useUserStatus from "@/hooks/useUserStatus";
 import { useContracts } from "@/context/contractsContext";
-import { useProjects, useProjectsDispatch } from "@/context/projectsContext";
+import { useProjectsDispatch } from "@/context/projectsContext";
 import { toMwei, toUsdc } from "@/utils";
 
 export default function ProjectInvest({
   id: projectId,
-  supply,
   availableSupply,
   price,
   attributes: { annualCreditsExpected },
 }) {
-  const { address } = useUserStatus();
   const { main, qlandMarketplace, usdc } = useContracts();
-  const { qlandAbi } = useProjects();
   const dispatch = useProjectsDispatch();
   const { data: signer } = useSigner();
   const provider = useProvider();

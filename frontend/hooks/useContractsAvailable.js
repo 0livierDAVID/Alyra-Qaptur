@@ -14,8 +14,8 @@ const useContractsAvailable = () => {
   const contractsDispatch = useContractsDispatch();
 
   useEffect(() => {
-    console.log(chain.id, chainId);
-    console.log(contractsAvailable);
+    // console.log(chain.id, chainId);
+    // console.log(contractsAvailable);
     if (chain?.id && chain.id !== chainId) {
       clearContext();
       initContracts();

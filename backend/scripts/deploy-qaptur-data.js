@@ -154,7 +154,7 @@ async function qaptur() {
   result = await factory.createNewProject(
     "Afforestation Of Degraded Grasslands In Vichada",
     "https://ipfs.io/ipfs/bafkreih2jw4ckqysahsvbp7wasnvnab6rhyaswdyef7a4ygxdv25desteq",
-    100,
+    30,
     10 * 1e6
   );
   let [addrQland] = await qapturState.projects(1);
@@ -164,7 +164,7 @@ async function qaptur() {
   result = await factory.createNewProject(
     "Withoneseed Timor Leste Community Forestry Program",
     "https://ipfs.io/ipfs/bafkreigu7u22uidmq53pibl6wmoqnnqwqqeiqp5ejxsa4b6bqxucpq2v34",
-    200,
+    15,
     20 * 1e6
   );
 

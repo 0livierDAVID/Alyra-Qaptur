@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Head from "next/head";
 import axios from "axios";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { useSigner } from "wagmi";
 import { Inter } from "next/font/google";
 import {
@@ -24,6 +24,7 @@ import {
   getIpfsUrl,
   prepareImageMetadata,
   prepareProjectMetadata,
+  toMwei,
 } from "@/utils";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -141,10 +142,9 @@ export default function ProjectAddition() {
       const parameters = [
         projectData.name, // name
         getIpfsUrl(jsonHash), // json data on IPFS
-        supply, // max supply
-        price, // project share price
+        BigNumber.from(supply), // max supply
+        BigNumber.from(toMwei(price)), // project share price
       ];
-      console;
       const contract = new ethers.Contract(
         factory.address,
         factory.abi,
@@ -152,13 +152,13 @@ export default function ProjectAddition() {
       );
       const transaction = await contract.createNewProject(...parameters);
       transaction.wait();
-      console.log(transaction);
+      // console.log(transaction);
 
       // transaction hash
       // smart contracts
       setNotif3({
         type: "success",
-        msg: `IpfsHash: ${jsonHash}  | transaction hash: ${transaction.hash}`,
+        msg: `IpfsHash: ${jsonHash}  |\n transaction hash: ${transaction.hash}`,
       });
     } catch (error) {
       setNotif3({
