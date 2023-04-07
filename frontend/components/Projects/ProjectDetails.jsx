@@ -1,23 +1,7 @@
 import Image from "next/image";
 import { Box, Grid, List, ListItem, Typography } from "@mui/material";
 
-export default function ProjectDetails({
-  description,
-  attributes: {
-    cobenefits,
-    surface,
-    afoluCategory,
-    startDate,
-    speciesPlanted,
-    projectProponent,
-    otherEntities,
-    status,
-    label,
-    labelId,
-    methodology,
-    verifier,
-  },
-}) {
+export default function ProjectDetails({ description, attributes }) {
   return (
     <Grid item xs={12} md={6}>
       <Typography sx={{ ml: 2 }} color="text.secondary">
@@ -30,7 +14,7 @@ export default function ProjectDetails({
         <ListItem>
           <Typography color="text.secondary">Co-benefits:</Typography>
           <Box sx={{ display: "flex", p: 1 }}>
-            {cobenefits.map((cobenefit) => (
+            {attributes?.cobenefits.map((cobenefit) => (
               <Image
                 key={cobenefit[0]}
                 src={`/images/cobenefits/${cobenefit[0]}.png`}
@@ -42,52 +26,58 @@ export default function ProjectDetails({
           </Box>
         </ListItem>
         <ListItem>
-          <Typography color="text.secondary">Surface: {surface} ha</Typography>
-        </ListItem>
-        <ListItem>
           <Typography color="text.secondary">
-            AFOLU category: {afoluCategory}
+            Surface: {attributes?.surface} ha
           </Typography>
         </ListItem>
         <ListItem>
           <Typography color="text.secondary">
-            Starting date: {startDate}
+            AFOLU category: {attributes?.afoluCategory}
           </Typography>
         </ListItem>
         <ListItem>
           <Typography color="text.secondary">
-            Trees species: {speciesPlanted}
+            Starting date: {attributes?.startDate}
           </Typography>
         </ListItem>
         <ListItem>
           <Typography color="text.secondary">
-            Project leader: {projectProponent}
+            Trees species: {attributes?.speciesPlanted}
           </Typography>
         </ListItem>
         <ListItem>
           <Typography color="text.secondary">
-            Other entities: {otherEntities}
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography color="text.secondary">Status: {status}</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography color="text.secondary">Label: {label}</Typography>
-        </ListItem>
-        <ListItem>
-          <Typography color="text.secondary">
-            projectId for label: {labelId}
+            Project leader: {attributes?.projectProponent}
           </Typography>
         </ListItem>
         <ListItem>
           <Typography color="text.secondary">
-            Methodology: {methodology}
+            Other entities: {attributes?.otherEntities}
           </Typography>
         </ListItem>
         <ListItem>
           <Typography color="text.secondary">
-            Verificator: {verifier}
+            Status: {attributes?.status}
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography color="text.secondary">
+            Label: {attributes?.label}
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography color="text.secondary">
+            projectId for label: {attributes?.labelId}
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography color="text.secondary">
+            Methodology: {attributes?.methodology}
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography color="text.secondary">
+            Verificator: {attributes?.verifier}
           </Typography>
         </ListItem>
       </List>
