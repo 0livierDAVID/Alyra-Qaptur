@@ -78,7 +78,7 @@ contract QapturLandMarketplace is Ownable {
         uint _projectId,
         uint _tokenAmount
     ) external {
-        (address qlandAddress,,uint totalSupply, uint availableSupply, uint price,) = stateContract.projects(_projectId);
+        (address qlandAddress,,uint totalSupply, uint availableSupply, uint price,,) = stateContract.projects(_projectId);
         require( // check supply
             availableSupply >= _tokenAmount,
             "insufficient supply"
@@ -103,7 +103,7 @@ contract QapturLandMarketplace is Ownable {
         uint _price
     ) external {
         // TODO check seller balance
-        (address qlandAddress,,,,,) = stateContract.projects(_projectId);
+        (address qlandAddress,,,,,,) = stateContract.projects(_projectId);
         uint id = findOnSaleTokenIndex(_projectId, _seller, _price);
         uint amountOST = projectOnSaleTokens[_projectId][id].amount;
         require( // check qty available

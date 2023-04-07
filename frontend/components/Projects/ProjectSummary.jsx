@@ -1,36 +1,45 @@
 import Image from "next/image";
 import { Grid, List, ListItem, Typography } from "@mui/material";
+import { toUsdc } from "@/utils";
 
-export default function ProjectSummary() {
+export default function ProjectSummary({
+  name,
+  image,
+  supply,
+  price,
+  attributes: { country, type, annualCreditsExpected },
+}) {
   return (
     <>
       <Grid item xs={4}>
-        <Image
-          src="/images/projects/project-1.png" // Route of the image file
+        <img
+          src={image} // Route of the image file
           height={220} // Desired size with correct aspect ratio
           width={220} // Desired size with correct aspect ratio
-          alt="Project name"
+          alt={name}
         />
       </Grid>
 
       <Grid item xs={12} md={8}>
         <List>
           <ListItem>
-            <Typography color="text.secondary">Country:</Typography>
+            <Typography color="text.secondary">Country: {country}</Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">Type:</Typography>
+            <Typography color="text.secondary">Type: {type}</Typography>
           </ListItem>
           <ListItem>
             <Typography color="text.secondary">
-              Estimated absorption (ton of CO2):
+              Estimated annual absorption: {annualCreditsExpected} ton of CO2
             </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">Shares:</Typography>
+            <Typography color="text.secondary">Shares: {supply}</Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">Share unit price:</Typography>
+            <Typography color="text.secondary">
+              Share unit price: {toUsdc(price)} USDC
+            </Typography>
           </ListItem>
         </List>
         {/* <List dense={dense}>

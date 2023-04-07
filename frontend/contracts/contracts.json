@@ -1,0 +1,74 @@
+{
+  "5": {
+    "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
+    "main": {
+      "address": "0x843B321C3e747405F545C72128b817CE7aC4FAC5"
+    },
+    "factory": {
+      "address": "0xe21BB7690a495F1fF7e1464bf466F4146E05E988"
+    },
+    "qlandMarketplace": {
+      "address": "0xc57343c0b921a1A1AE716Fa641fF5aDa73C659D7"
+    },
+    "reward": {
+      "address": "0xECfb43adA48533023156F650D5Ae4D0857479Fe4"
+    },
+    "usdc": {
+      "address": "0x65aFADD39029741B3b8f0756952C74678c9cEC93"
+    }
+  },
+  "31337": {
+    "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "main": {
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+    },
+    "factory": {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+    },
+    "qlandMarketplace": {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+    },
+    "reward": {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
+    },
+    "usdc": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    }
+  },
+  "80001": {
+    "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
+    "main": {
+      "address": "0x87F3cA809F3433a48bc0A7532c6CF31E1b91e549"
+    },
+    "factory": {
+      "address": "0x3c4D1BDc21b2dC560c7d59FF69e8DC6E570f5ea0"
+    },
+    "qlandMarketplace": {
+      "address": "0x632302dC3516D9e7c70aaF456B780057702E64f5"
+    },
+    "reward": {
+      "address": "0xB782ae398033Aea6ED47bDd6C2ae9df5820A5e6f"
+    },
+    "usdc": {
+      "address": "0xe9DcE89B076BA6107Bb64EF30678efec11939234"
+    }
+  },
+  "11155111": {
+    "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
+    "main": {
+      "address": "0x1e1284963d376CB77cb719CF8ac54De19A76D57C"
+    },
+    "factory": {
+      "address": "0x87F3cA809F3433a48bc0A7532c6CF31E1b91e549"
+    },
+    "qlandMarketplace": {
+      "address": "0x632302dC3516D9e7c70aaF456B780057702E64f5"
+    },
+    "reward": {
+      "address": "0x3c4D1BDc21b2dC560c7d59FF69e8DC6E570f5ea0"
+    },
+    "usdc": {
+      "address": "0xda9d4f9b69ac6C22e444eD9aF0CfC043b7a7f53f"
+    }
+  }
+}

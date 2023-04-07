@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
 import { Typography, Grid, Box } from "@mui/material";
+import { useProjects } from "@/context/projectsContext";
 import Layout from "@/components/Layout";
 import ProjectSummary from "@/components/Projects/ProjectSummary";
 import ProjectDetails from "@/components/Projects/ProjectDetails";
@@ -13,19 +14,23 @@ export default function Project() {
   const router = useRouter();
   const { id } = router.query;
   const projectName = "Project name";
+  const { array: projects } = useProjects();
+  console.log(projects);
+  const [project] = projects.filter((project) => project.id == id);
+
   // check valid id: else come back later
   return (
     <Layout>
       <Head>
-        <title>{projectName} - Qaptur</title>
+        <title>{project.name} - Qaptur</title>
       </Head>
       <Typography variant="h4" component="h1">
-        {projectName}
+        {project.name}
       </Typography>
       <Grid container spacing={1}>
-        <ProjectSummary />
-        <ProjectDetails />
-        <ProjectInvest />
+        <ProjectSummary {...project} />
+        <ProjectDetails {...project} />
+        <ProjectInvest {...project} />
       </Grid>
     </Layout>
   );

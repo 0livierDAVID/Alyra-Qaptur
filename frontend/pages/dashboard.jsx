@@ -5,6 +5,12 @@ import Boxes from "@/components/Dashboard/Boxes";
 import Assets from "@/components/Dashboard/Assets";
 
 export default function Dashboard() {
+  /** Data
+   * - project share on request by card (hidden by default if sup 0 show)
+   * - transactions market place filter from or to (address)
+   *
+   */
+
   return (
     <Layout>
       <Head>
