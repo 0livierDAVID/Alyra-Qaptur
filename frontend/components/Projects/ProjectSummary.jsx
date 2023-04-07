@@ -43,7 +43,7 @@ export default function ProjectSummary({
           </ListItem>
           <ListItem>
             <Typography color="text.secondary">
-              {/* Share unit price: {toUsdc(price)} USDC */}
+              Share unit price: {toUsdc(price)} USDC
             </Typography>
           </ListItem>
         </List>
