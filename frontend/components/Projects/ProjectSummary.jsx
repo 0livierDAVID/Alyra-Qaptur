@@ -7,7 +7,7 @@ export default function ProjectSummary({
   image,
   supply,
   price,
-  attributes: { country, type, annualCreditsExpected },
+  attributes,
 }) {
   return (
     <>
@@ -23,14 +23,19 @@ export default function ProjectSummary({
       <Grid item xs={12} md={8}>
         <List>
           <ListItem>
-            <Typography color="text.secondary">Country: {country}</Typography>
-          </ListItem>
-          <ListItem>
-            <Typography color="text.secondary">Type: {type}</Typography>
+            <Typography color="text.secondary">
+              Country: {attributes?.country}
+            </Typography>
           </ListItem>
           <ListItem>
             <Typography color="text.secondary">
-              Estimated annual absorption: {annualCreditsExpected} ton of CO2
+              Type: {attributes?.type}
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <Typography color="text.secondary">
+              Estimated annual absorption: {attributes?.annualCreditsExpected}{" "}
+              ton of CO2
             </Typography>
           </ListItem>
           <ListItem>
