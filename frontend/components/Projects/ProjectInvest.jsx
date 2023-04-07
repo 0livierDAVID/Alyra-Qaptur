@@ -23,7 +23,7 @@ export default function ProjectInvest({
   id: projectId,
   availableSupply,
   price,
-  attributes: { annualCreditsExpected },
+  attributes,
 }) {
   const { main, qlandMarketplace, usdc } = useContracts();
   const dispatch = useProjectsDispatch();
@@ -97,7 +97,8 @@ export default function ProjectInvest({
             sx={{ mt: -2, mb: 2, fontSize: 14 }}
             color="text.secondary"
           >
-            Estimated yearly carbon credits emission: {annualCreditsExpected}
+            Estimated yearly carbon credits emission:{" "}
+            {attributes?.annualCreditsExpected}
           </Typography>
           <FormControl fullWidth>
             <TextField
