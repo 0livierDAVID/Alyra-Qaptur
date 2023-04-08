@@ -3,7 +3,7 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "./QapturState.sol";
 import "./QapturLand.sol";
 
@@ -81,7 +81,7 @@ contract QapturLandMarketplace is Ownable {
             availableSupply >= _tokenAmount,
             "insufficient supply"
         );
-        stateContract.updateSupply(_projectId, availableSupply - _tokenAmount);
+        stateContract.updateAvailableSupply(_projectId, availableSupply - _tokenAmount);
         uint totalPrice = _tokenAmount * price;
         require( // check allowance
             erc20Stable.allowance(msg.sender, address(this)) >= totalPrice,

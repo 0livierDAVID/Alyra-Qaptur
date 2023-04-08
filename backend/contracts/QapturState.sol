@@ -60,6 +60,10 @@ contract QapturState is Ownable {
         uint supply,
         uint price
     );
+    event UrlUpdated(uint projectId, string url);
+    event PriceUpdated(uint projectId, uint price);
+    event AvailableSupplyUpdated(uint projectId, uint supply);
+
 
     /*** CONFIGURATION onlyOwner ***/
     function setFactoryAddress(address _contractAddr) external onlyOwner {
@@ -151,11 +155,20 @@ contract QapturState is Ownable {
         );
     }
 
-    function updateSupply(
+    function updateUrl(
+        uint _projectId,
+        string calldata _newUrl
+    ) external isInternalContract {
+        projects[_projectId].url = _newUrl;
+        emit UrlUpdated(_projectId, _newUrl);
+    }
+
+    function updateAvailableSupply(
         uint _projectId,
         uint _newValue
     ) external isInternalContract {
         projects[_projectId].availableSupply = _newValue;
+        emit AvailableSupplyUpdated(_projectId, _newValue);
     }
 
     function updatePrice(
@@ -163,6 +176,7 @@ contract QapturState is Ownable {
         uint _newValue
     ) external isInternalContract {
         projects[_projectId].price = _newValue;
+        emit PriceUpdated(_projectId, _newValue);
     }
 
 }
