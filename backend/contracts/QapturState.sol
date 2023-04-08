@@ -7,7 +7,7 @@ import "./QapturProjectReward.sol";
 import "./QapturLandMarketplace.sol";
 
 // Uncomment this line to use console.log
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 /** TODO: 
     - optimize variable order and size (struct)
@@ -135,7 +135,7 @@ contract QapturState is Ownable {
         uint _qlandPrice,
         string calldata _jsonUrl
     ) external isInternalContract {
-        console.log("AddProjectData", _qlandAddr);
+        // console.log("AddProjectData", _qlandAddr);
         projectId += 1;
         projects[projectId] = QapturProject(
             _qlandAddr,

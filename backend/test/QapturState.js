@@ -15,7 +15,7 @@ describe("QapturState contract", function () {
     // add an internal contract address set as factoryAddress
     await qapturState.connect(owner).setFactoryAddress(internal.address);
 
-    // load a project in the contract
+    // example project data
     const project = {
       id: 1,
       qlandAddr: qland.address,

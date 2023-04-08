@@ -34,7 +34,7 @@ contract QapturProjectFactory is Ownable {
     function createNewProject(
         string calldata _name,
         string calldata _jsonUrl,
-        uint _maxSupply,
+        uint _totalSupply,
         uint _qlandPrice
     ) external onlyOwner {
         address qlandAddr = deployQlandSmartContract(_name);
@@ -44,7 +44,7 @@ contract QapturProjectFactory is Ownable {
         stateContract.addProjectData(
             qlandAddr,
             qco2Addr,
-            _maxSupply,
+            _totalSupply,
             _qlandPrice,
             _jsonUrl
         );
