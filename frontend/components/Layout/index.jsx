@@ -1,18 +1,23 @@
-import { Grid, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 import LeftMenu from "./LeftMenu";
 import AdminMenu from "./AdminMenu";
+import LoadProjects from "../Projects/LoadProjects";
+import useUserStatus from "@/hooks/useUserStatus";
 
 export default function Layout({ children }) {
+  const { isConnected, isAdmin } = useUserStatus();
+
   return (
     <>
       <Header />
+      {/* {!isConnected && <Box sx={{ marginBottom: "5%" }}>{children}</Box>}
+      {isConnected && ( */}
       <Box sx={{ display: "flex", marginBottom: "5%" }}>
         <Box sx={{ width: { xs: "70px", md: "200px" }, flexShrink: 0 }}>
           <LeftMenu />
-          {/* TODO Conditional display admin */}
-          <AdminMenu />
+          {isAdmin && <AdminMenu />}
         </Box>
 
         <Box
@@ -22,9 +27,12 @@ export default function Layout({ children }) {
             p: 2,
           }}
         >
+          <LoadProjects />
           {children}
         </Box>
       </Box>
+      {/* )} */}
+
       <Footer />
     </>
   );

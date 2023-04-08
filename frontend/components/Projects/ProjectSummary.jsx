@@ -1,36 +1,49 @@
 import Image from "next/image";
 import { Grid, List, ListItem, Typography } from "@mui/material";
 
-export default function ProjectSummary() {
+export default function ProjectSummary({
+  name,
+  image,
+  supply,
+  price,
+  attributes,
+}) {
   return (
     <>
       <Grid item xs={4}>
-        <Image
-          src="/images/projects/project-1.png" // Route of the image file
+        <img
+          src={image} // Route of the image file
           height={220} // Desired size with correct aspect ratio
           width={220} // Desired size with correct aspect ratio
-          alt="Project name"
+          alt={name}
         />
       </Grid>
 
       <Grid item xs={12} md={8}>
         <List>
           <ListItem>
-            <Typography color="text.secondary">Country:</Typography>
-          </ListItem>
-          <ListItem>
-            <Typography color="text.secondary">Type:</Typography>
-          </ListItem>
-          <ListItem>
             <Typography color="text.secondary">
-              Estimated absorption (ton of CO2):
+              Country: {attributes?.country}
             </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">Shares:</Typography>
+            <Typography color="text.secondary">
+              Type: {attributes?.type}
+            </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">Share unit price:</Typography>
+            <Typography color="text.secondary">
+              Estimated annual absorption: {attributes?.annualCreditsExpected}{" "}
+              ton of CO2
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <Typography color="text.secondary">Shares: {supply}</Typography>
+          </ListItem>
+          <ListItem>
+            <Typography color="text.secondary">
+              Share unit price: {price} USDC
+            </Typography>
           </ListItem>
         </List>
         {/* <List dense={dense}>

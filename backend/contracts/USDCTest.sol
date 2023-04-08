@@ -13,4 +13,8 @@ contract USDCTest is ERC20 {
         _mint(0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, 10000 * 10 ** 6); //addr2 Hardhat
         _mint(0x90F79bf6EB2c4f870365E785982E1f101E93b906, 10000 * 10 ** 6); //addr3 Hardhat
     }
+
+    function decimals() public view virtual override returns (uint8) {
+        return 6;
+    }
 }

@@ -30,6 +30,7 @@ contract QapturState is Ownable {
         uint availableSupply;
         uint price;
         uint lastDistribution; //year
+        string url;
     }
     mapping(address => bool) _contracts;
     mapping(uint => QapturProject) public projects;
@@ -53,11 +54,11 @@ contract QapturState is Ownable {
     // event config
     event ContractAdressUpdated(string name, address contractAddress); // several events by contract type
     event NewProjectDeployed(
-        uint _id,
+        uint id,
         address qlandAddress,
         address qco2Address,
-        uint qlandMaxSupply,
-        uint qlandPrice
+        uint supply,
+        uint price
     );
 
     /*** CONFIGURATION onlyOwner ***/
@@ -113,37 +114,41 @@ contract QapturState is Ownable {
     /*** ------------------------- ***/
 
     /*** PROJECT ***/
-    function getNewId() external returns (uint) {
-        return ++projectId;
+    // GETTERS
+    function getUrl(uint _projectId) external view returns (string memory) {
+        return projects[_projectId].url;
     }
 
+    function getAvailableSupply(uint _projectId) external view returns (uint) {
+        return projects[_projectId].availableSupply;
+    }
+
+    // SETTERS
     function addProjectData(
-        uint _id,
         address _qlandAddr,
         address _qco2Addr,
         uint _qlandTotalSupply,
-        uint _qlandPrice
+        uint _qlandPrice,
+        string calldata _jsonUrl
     ) external isInternalContract {
         console.log("AddProjectData", _qlandAddr);
-        projects[_id] = QapturProject(
+        projectId += 1;
+        projects[projectId] = QapturProject(
             _qlandAddr,
             _qco2Addr,
             _qlandTotalSupply,
             _qlandTotalSupply,
             _qlandPrice,
-            0
+            0,
+            _jsonUrl
         );
         emit NewProjectDeployed(
-            _id,
+            projectId,
             _qlandAddr,
             _qco2Addr,
             _qlandTotalSupply,
             _qlandPrice
         );
-    }
-
-    function getAvailableSupply(uint _projectId) external view returns (uint) {
-        return projects[_projectId].availableSupply;
     }
 
     function updateSupply(
@@ -152,4 +157,12 @@ contract QapturState is Ownable {
     ) external isInternalContract {
         projects[_projectId].availableSupply = _newValue;
     }
+
+    function updatePrice(
+        uint _projectId,
+        uint _newValue
+    ) external isInternalContract {
+        projects[_projectId].price = _newValue;
+    }
+
 }

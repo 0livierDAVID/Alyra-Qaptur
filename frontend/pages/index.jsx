@@ -1,16 +1,14 @@
-import { Inter } from "next/font/google";
+import Head from "next/head";
+
 import Layout from "@/components/Layout";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+export default function App() {
   return (
     <Layout>
-      Incredible landing page without side menu!
-      <br />
-      Only connect button in the header.
-      <br />
-      (Content need to be defined)
+      <Head>
+        <title>Welcome page - Qaptur</title>
+      </Head>
+      Incredible landing page!
     </Layout>
   );
 }
