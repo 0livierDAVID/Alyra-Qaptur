@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Grid, List, ListItem, Typography } from "@mui/material";
-import { toUsdc } from "@/utils";
 
 export default function ProjectSummary({
   name,
@@ -43,7 +42,7 @@ export default function ProjectSummary({
           </ListItem>
           <ListItem>
             <Typography color="text.secondary">
-              Share unit price: {toUsdc(price)} USDC
+              Share unit price: {price} USDC
             </Typography>
           </ListItem>
         </List>

@@ -10,7 +10,6 @@ import {
   CardActions,
   Typography,
 } from "@mui/material";
-import { toUsdc } from "@/utils";
 
 export default function ProjectCard({
   id,
@@ -34,7 +33,7 @@ export default function ProjectCard({
           </CardContent>
           <CardActions sx={{ display: "flex", justifyContent: "end" }}>
             <Chip label={`Available: ${availableSupply}`} />
-            <Chip label={`From: ${toUsdc(price)} USDC`} />
+            <Chip label={`From: ${price} USDC`} />
           </CardActions>
         </CardActionArea>
       </Card>

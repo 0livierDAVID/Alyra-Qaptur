@@ -8,6 +8,7 @@ import { Alert } from "@mui/material";
 import { useContracts } from "@/context/contractsContext";
 import { useProjects, useProjectsDispatch } from "@/context/projectsContext";
 import useContractsAvailable from "@/hooks/useContractsAvailable";
+import { toUsdc } from "@/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,7 +66,7 @@ export default function LoadProjects() {
             qlandAddr,
             qco2Addr,
             supply: supply.toNumber(),
-            price: price.toNumber(),
+            price: toUsdc(price),
             availableSupply: availableSupply.toNumber(),
             attributes,
           },

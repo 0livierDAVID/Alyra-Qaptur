@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useContracts } from "@/context/contractsContext";
 import { useProjectsDispatch } from "@/context/projectsContext";
-import { toMwei, toUsdc } from "@/utils";
+import { toMwei } from "@/utils";
 
 export default function ProjectInvest({
   id: projectId,
@@ -36,7 +36,8 @@ export default function ProjectInvest({
   const buyShares = async () => {
     try {
       if (!nbShare) return;
-      const amount = nbShare * toUsdc(price);
+      console.log(price);
+      const amount = nbShare * price;
 
       // usdc approval
       const contractUsdc = new Contract(usdc.address, usdc.abi, signer);
@@ -124,7 +125,7 @@ export default function ProjectInvest({
                 sx={{ fontSize: 14, fontWeight: "bold" }}
                 color="text.secondary"
               >
-                Total price: {nbShare * toUsdc(price) || 0} USDC
+                Total price: {nbShare * price || 0} USDC
               </Typography>
             </ListItem>
           </List>
