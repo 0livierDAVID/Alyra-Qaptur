@@ -38,16 +38,16 @@
   "80001": {
     "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
     "main": {
-      "address": "0x87F3cA809F3433a48bc0A7532c6CF31E1b91e549"
+      "address": "0xfB596baFAA209261d8EC21B95E6502727E132cbF"
     },
     "factory": {
-      "address": "0x3c4D1BDc21b2dC560c7d59FF69e8DC6E570f5ea0"
+      "address": "0x405C4B3205aDe9361e313065C52D33DE163377dc"
     },
     "qlandMarketplace": {
-      "address": "0x632302dC3516D9e7c70aaF456B780057702E64f5"
+      "address": "0xEf6e5474F1193074Af8651A14e7CC49e42B7949d"
     },
     "reward": {
-      "address": "0xB782ae398033Aea6ED47bDd6C2ae9df5820A5e6f"
+      "address": "0xFade77101fCF226ef073aa28001fc99c57f728A7"
     },
     "usdc": {
       "address": "0xe9DcE89B076BA6107Bb64EF30678efec11939234"

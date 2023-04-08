@@ -1,13 +1,13 @@
 import { createContext, useContext, useReducer } from "react";
 
-import main from "../../backend/artifacts/contracts/QapturState.sol/QapturState.json";
-import factory from "../../backend/artifacts/contracts/QapturProjectFactory.sol/QapturProjectFactory.json";
-import reward from "../../backend/artifacts/contracts/QapturProjectReward.sol/QapturProjectReward.json";
-import usdc from "../../backend/artifacts/contracts/USDCTest.sol/USDCTest.json";
-import qlandMarketplace from "../../backend/artifacts/contracts/QapturLandMarketplace.sol/QapturLandMarketplace.json";
-//import qco2Marketplace from "../../backend/artifacts/contracts/QapturCo2Marketplace.sol/QapturCo2Marketplace.json";
+import main from "@/contracts/QapturState.json";
+import factory from "@/contracts/QapturProjectFactory.json";
+import reward from "@/contracts/QapturProjectReward.json";
+import usdc from "@/contracts/USDCTest.json";
+import qlandMarketplace from "@/contracts/QapturLandMarketplace.json";
+//import qco2Marketplace from "@/contracts/QapturCo2Marketplace.json";
 
-import contractsJson from "../contracts/contracts.json";
+import contractsJson from "@/contracts/contracts.json";
 
 const ContractsContext = createContext(null);
 

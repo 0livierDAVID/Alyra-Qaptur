@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 
-import qland from "../../backend/artifacts/contracts/QapturLand.sol/QapturLand.json";
-import qco2 from "../../backend/artifacts/contracts/QapturCo2.sol/QapturCo2.json";
+import qland from "@/contracts/QapturLand.json";
+import qco2 from "@/contracts/QapturCo2.json";
 
 const ProjectsContext = createContext(null);
 
