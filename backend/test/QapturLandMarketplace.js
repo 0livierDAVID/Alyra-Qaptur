@@ -399,7 +399,6 @@ describe("QapturLandMarketplace contract", function () {
       initialQlandSeller = Number(
         await qland.balanceOf(addr1.address, project.tokenId)
       );
-      console.log("1b");
       initialQlandBuyer = Number(
         await qland.balanceOf(addr2.address, project.tokenId)
       );
@@ -418,7 +417,6 @@ describe("QapturLandMarketplace contract", function () {
           sell.nbTokens,
           sell.price
         );
-      console.log(3);
       // check usdc balance after (seller/buyer)
       expect(await usdc.balanceOf(addr1.address)).to.equal(
         initialUsdcSeller + totalPrice
