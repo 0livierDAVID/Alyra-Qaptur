@@ -10,8 +10,8 @@ describe("QapturLand contract", function () {
     const qland = await QapturLand.deploy();
     await qland.deployed();
 
-    const tokenId = ethers.BigNumber.from("0");
-    const amount = ethers.BigNumber.from("100");
+    const tokenId = 0;
+    const amount = 100;
     const data = [];
 
     return {

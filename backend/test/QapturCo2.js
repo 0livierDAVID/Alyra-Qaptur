@@ -10,8 +10,8 @@ describe("QapturCo2 contract", function () {
     const qco2 = await QapturCo2.deploy();
     await qco2.deployed();
 
-    const tokenId = ethers.BigNumber.from("0");
-    const amount = ethers.BigNumber.from("100");
+    const tokenId = 0;
+    const amount = 100;
     const data = [];
 
     return {

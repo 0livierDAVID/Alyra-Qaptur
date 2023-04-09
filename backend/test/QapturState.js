@@ -6,6 +6,7 @@ describe("QapturState contract", function () {
     const [owner, addr1, addr2, internal, contract, qland, qco2] =
       await ethers.getSigners();
     const zeroAddr = ethers.constants.AddressZero;
+    const decimals = 1e6;
 
     const QapturState = await ethers.getContractFactory("QapturState");
     const qapturState = await QapturState.deploy();
@@ -20,17 +21,17 @@ describe("QapturState contract", function () {
       id: 1,
       qlandAddr: qland.address,
       qco2Addr: qco2.address,
-      totalSupply: ethers.BigNumber.from("100"), // total supply
-      availableSupply: ethers.BigNumber.from("100"), // available supply
-      price: ethers.BigNumber.from("10"), // price
-      lastDistribution: ethers.BigNumber.from("0"), // last distribution
+      totalSupply: 100, // total supply
+      availableSupply: 100, // available supply
+      price: 10 * decimals, // price
+      lastDistribution: 0, // last distribution
       url: "https://ipfs.io/ipfs/BlaBlaBla",
     };
     const projectValues = [
       qland.address,
       qco2.address,
-      ethers.BigNumber.from("100"), // total supply
-      ethers.BigNumber.from("10"), // price
+      100, // total supply
+      10 * decimals, // price
       "https://ipfs.io/ipfs/BlaBlaBla",
     ];
 

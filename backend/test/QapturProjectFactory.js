@@ -6,6 +6,7 @@ describe("QapturProjectFactory contract", function () {
   async function deployQapturProjectFactoryFixture() {
     const [owner, addr1, addr2, qlandMarketplace] = await ethers.getSigners();
     const zeroAddr = ethers.constants.AddressZero;
+    const decimals = 1e6;
 
     // QapturState is needed for the constructor
     const QapturState = await ethers.getContractFactory("QapturState");
@@ -29,14 +30,14 @@ describe("QapturProjectFactory contract", function () {
       id: 1,
       name: "A wonderful project",
       url: "https://ipfs.io/ipfs/BlaBlaBla",
-      totalSupply: ethers.BigNumber.from("100"), // total supply
-      price: ethers.BigNumber.from("10"), // price
+      totalSupply: 100, // total supply
+      price: 10 * decimals, // price
     };
     const projectValues = [
       "A wonderful project",
       "https://ipfs.io/ipfs/BlaBlaBla",
-      ethers.BigNumber.from("100"), // total supply
-      ethers.BigNumber.from("10"), // price
+      100, // total supply
+      10 * decimals, // price
     ];
 
     return {
