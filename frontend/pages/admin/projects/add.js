@@ -45,7 +45,6 @@ export default function ProjectAddition() {
   const [imgFile, setImgFile] = useState("");
   const [imgHash, setImgHash] = useState("");
 
-  const [jsonHash, setJsonHash] = useState("");
   const [supply, setSupply] = useState("");
   const [price, setPrice] = useState("");
 
@@ -125,9 +124,16 @@ export default function ProjectAddition() {
           "Content-Type": "application/json",
         },
       });
-      console.log(resFile.data.IpfsHash);
-      setJsonHash(resFile.data.IpfsHash);
-      createProjectSC();
+      const ipfsHash = resFile.data.IpfsHash;
+      console.log(ipfsHash);
+      if (ipfsHash === "") {
+        setNotif3({
+          type: "error",
+          msg: `The file loading on IPFS failed`,
+        });
+        return;
+      }
+      createProjectSC(ipfsHash);
     } catch (error) {
       setNotif3({
         type: "error",
@@ -136,12 +142,12 @@ export default function ProjectAddition() {
     }
   };
 
-  const createProjectSC = async () => {
+  const createProjectSC = async (fileHash) => {
     if (!contractsAvailable) return;
     try {
       const parameters = [
         projectData.name, // name
-        getIpfsUrl(jsonHash), // json data on IPFS
+        getIpfsUrl(fileHash), // json data on IPFS
         BigNumber.from(supply), // max supply
         BigNumber.from(toMwei(price)), // project share price
       ];
@@ -158,7 +164,7 @@ export default function ProjectAddition() {
       // smart contracts
       setNotif3({
         type: "success",
-        msg: `IpfsHash: ${jsonHash}  |\n transaction hash: ${transaction.hash}`,
+        msg: `IpfsHash: ${fileHash}  |\n transaction hash: ${transaction.hash}`,
       });
     } catch (error) {
       setNotif3({

@@ -140,7 +140,7 @@ contract QapturLandMarketplace is Ownable {
         (address qlandAddr,,,,,,) = stateContract.projects(_projectId);
         QapturLand qland = QapturLand(qlandAddr);
         require ( // check seller balance because no lock
-            qland.balanceOf(msg.sender, 0) > _tokenAmount,
+            qland.balanceOf(msg.sender, 0) >= _tokenAmount,
             "Insufficient seller balance"
         );
         projectOnSaleTokens[_projectId].push(OnSaleToken(payable(msg.sender), _tokenAmount, _tokenPrice));
