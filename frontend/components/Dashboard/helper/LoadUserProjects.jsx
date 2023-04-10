@@ -21,13 +21,13 @@ export default function LoadUserProjects({ updateUserProjects }) {
   const [notif, setNotif] = useState(null);
 
   useEffect(() => {
-    loadProjects();
+    //loadProjects();
   }, [contractsAvailable, isConnected]);
 
   const checkUserBalance = async (project) => {
     if (!contractsAvailable && !isConnected) return;
     try {
-      console.log(projectsArray);
+      //console.log(projectsArray);
       const {
         args: { id, qlandAddr },
       } = project;
@@ -54,7 +54,7 @@ export default function LoadUserProjects({ updateUserProjects }) {
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const filter = contract.filters.NewProjectDeployed();
       const projects = await contract.queryFilter(filter);
-      console.log(projects);
+      //console.log(projects);
 
       projects.forEach((project) => {
         checkUserBalance(project);

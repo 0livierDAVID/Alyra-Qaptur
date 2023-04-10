@@ -61,7 +61,7 @@ export default function ProjectInvest({
         BigNumber.from(nbShare)
       );
       await transaction2.wait();
-      msgTxt += `\nPurchase hash: ${transaction1.hash}`;
+      msgTxt += `\nPurchase hash: ${transaction2.hash}`;
 
       // update available supply
       const mainContract = new Contract(main.address, main.abi, provider);
