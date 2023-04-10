@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function LoadUserProjects({ updateUserProjects }) {
   const contractsAvailable = useContractsAvailable();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { main } = useContracts();
   const { qlandAbi, array: projectsArray } = useProjects();
   const dispatch = useProjectsDispatch();
@@ -22,10 +22,10 @@ export default function LoadUserProjects({ updateUserProjects }) {
 
   useEffect(() => {
     loadProjects();
-  }, [contractsAvailable]);
+  }, [contractsAvailable, isConnected]);
 
   const checkUserBalance = async (project) => {
-    if (!contractsAvailable) return;
+    if (!contractsAvailable && !isConnected) return;
     try {
       console.log(projectsArray);
       const {
@@ -47,7 +47,7 @@ export default function LoadUserProjects({ updateUserProjects }) {
   };
 
   const loadProjects = async () => {
-    if (!contractsAvailable) return;
+    if (!contractsAvailable && !isConnected) return;
     try {
       // console.log(main);
       // get events NewProjectDeployed from the contracts
