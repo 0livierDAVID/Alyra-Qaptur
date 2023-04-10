@@ -7,6 +7,7 @@ import Boxes from "@/components/Dashboard/Boxes";
 import Assets from "@/components/Dashboard/Assets";
 import LoadUserProjects from "@/components/Dashboard/helper/LoadUserProjects";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
+import { red } from "@mui/material/colors";
 
 export default function Dashboard() {
   /** Data
@@ -25,6 +26,10 @@ export default function Dashboard() {
 
   return (
     <Layout>
+      <LoadUserProjects
+        // userProjects={userProjects}
+        updateUserProjects={updateUserProjects}
+      />
       <Head>
         <title>My dashboasd - Qaptur</title>
       </Head>
@@ -36,10 +41,6 @@ export default function Dashboard() {
 
       {isConnected && (
         <>
-          <LoadUserProjects
-            // userProjects={userProjects}
-            updateUserProjects={updateUserProjects}
-          />
           <Boxes />
           <Assets />
         </>
