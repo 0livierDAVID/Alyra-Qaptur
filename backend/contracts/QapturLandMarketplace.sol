@@ -3,20 +3,20 @@ pragma solidity 0.8.18;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+// import "@openzeppelin/contracts/security/RentrancyGuard";
 import "./QapturState.sol";
 import "./QapturLand.sol";
 
 // Uncomment this line to use console.log
-import "hardhat/console.sol";
+import "hardhat/console.sol"; 
 
 /* TODO:
-    - payable smart contract?
-    - if yes, withdraw possibility
     - address for project share
     - address for transaction fees
     - re-entrancy on buy functions?
     - safeMint?
+    - improve on sale item management
 */
 
 contract QapturLandMarketplace is Ownable {
@@ -31,7 +31,7 @@ contract QapturLandMarketplace is Ownable {
         uint price;
     }
     OnSaleToken[] onSaleTokens;
-    mapping(uint => OnSaleToken[]) public projectOnSaleTokens;
+    mapping(uint => OnSaleToken[]) projectOnSaleTokens;
 
     /** EVENTS */
     event BoughtFromInitialSupply(address buyer, uint projectId, uint amount);
@@ -61,6 +61,7 @@ contract QapturLandMarketplace is Ownable {
                 return i;
             }
         }
+        revert("Index not found");
     }
     
     // update qty or remove index
@@ -81,13 +82,13 @@ contract QapturLandMarketplace is Ownable {
         (address qlandAddress,,uint totalSupply, uint availableSupply, uint price,,) = stateContract.projects(_projectId);
         require( // check supply
             availableSupply >= _tokenAmount,
-            "insufficient supply"
+            "Insufficient supply"
         );
-        stateContract.updateSupply(_projectId, availableSupply - _tokenAmount);
+        stateContract.updateAvailableSupply(_projectId, availableSupply - _tokenAmount);
         uint totalPrice = _tokenAmount * price;
         require( // check allowance
             erc20Stable.allowance(msg.sender, address(this)) >= totalPrice,
-            "insufficient allowance"
+            "Insufficient allowance"
         );
         erc20Stable.transferFrom(msg.sender, projectWallet, totalPrice);
         QapturLand qland = QapturLand(qlandAddress);
@@ -102,25 +103,29 @@ contract QapturLandMarketplace is Ownable {
         uint _tokenAmount,
         uint _price
     ) external {
-        // TODO check seller balance
-        (address qlandAddress,,,,,,) = stateContract.projects(_projectId);
+        (address qlandAddr,,,,,,) = stateContract.projects(_projectId);
+        QapturLand qland = QapturLand(qlandAddr);
+        require ( // check seller balance because there is no lock
+            qland.balanceOf(_seller, 0) >= _tokenAmount,
+            "Insufficient seller balance"
+        );
         uint id = findOnSaleTokenIndex(_projectId, _seller, _price);
         uint amountOST = projectOnSaleTokens[_projectId][id].amount;
         require( // check qty available
             amountOST >= _tokenAmount,
-            "requested quantity not available"
+            "Requested quantity not available"
         );
         updateOnSaleTokenQty(_projectId, id, amountOST - _tokenAmount);
         uint totalPrice = _tokenAmount * _price;
         require( // check allowance
             erc20Stable.allowance(msg.sender, address(this)) >= totalPrice,
-            "insufficient allowance"
+            "Insufficient allowance"
         );
         erc20Stable.transferFrom(msg.sender, _seller, totalPrice);
-        QapturLand qland = QapturLand(qlandAddress);
+        
         require( // check approval
             qland.isApprovedForAll(_seller, address(this)),
-            "missing approval"
+            "Missing approval"
         );
         qland.safeTransferFrom(_seller, msg.sender, 0, _tokenAmount, '0x0');
         emit BoughtOnMarketplace(_seller, msg.sender, _projectId, _tokenAmount);
@@ -131,8 +136,13 @@ contract QapturLandMarketplace is Ownable {
         uint _tokenAmount,
         uint _tokenPrice
     ) external {
-        // TODO check balance
-        // TODO check combination already exists?
+        // TODO check combination already exists
+        (address qlandAddr,,,,,,) = stateContract.projects(_projectId);
+        QapturLand qland = QapturLand(qlandAddr);
+        require ( // check seller balance because no lock
+            qland.balanceOf(msg.sender, 0) > _tokenAmount,
+            "Insufficient seller balance"
+        );
         projectOnSaleTokens[_projectId].push(OnSaleToken(payable(msg.sender), _tokenAmount, _tokenPrice));
         emit ItemAddedToMarketplace(msg.sender, _projectId, _tokenAmount, _tokenPrice);
     }

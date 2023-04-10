@@ -34,21 +34,21 @@ contract QapturProjectFactory is Ownable {
     function createNewProject(
         string calldata _name,
         string calldata _jsonUrl,
-        uint _maxSupply,
+        uint _totalSupply,
         uint _qlandPrice
     ) external onlyOwner {
-        address addrQland = deployQlandSmartContract(_name);
-        address addrCo2 = address(0);
-        //address addrCo2 = deployQco2SmartContract(_name);
+        address qlandAddr = deployQlandSmartContract(_name);
+        address qco2Addr = address(0);
+        //address qco2Addr = deployQco2SmartContract(_name);
 
         stateContract.addProjectData(
-            addrQland,
-            addrCo2,
-            _maxSupply,
+            qlandAddr,
+            qco2Addr,
+            _totalSupply,
             _qlandPrice,
             _jsonUrl
         );
-        emit ProjectCollectionsCreated(addrQland, addrCo2, block.timestamp);
+        emit ProjectCollectionsCreated(qlandAddr, qco2Addr, block.timestamp);
     }
 
     // Deploy a new qland smart contract

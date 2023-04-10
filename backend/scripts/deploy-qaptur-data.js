@@ -232,7 +232,7 @@ async function qaptur() {
   console.log("Add to market place");
 
   console.log("add");
-  await qlandMarketplaceAddr1.addItemToMarketplace(1, 10, 150);
+  await qlandMarketplaceAddr1.addItemToMarketplace(1, 10, 150 * 1e6);
   //qland allowance to sc
   console.log("allowance");
   await qlandAdr1.setApprovalForAll(qlandMarketplace.address, true);
@@ -255,10 +255,15 @@ async function qaptur() {
   const qlandMarketplaceAddr2 = qlandMarketplace.connect(addr2);
   logPriceStable("buyer balance", await usdc.balanceOf(addr2.address));
   logPriceStable("seller balance", await usdc.balanceOf(addr1.address));
-  await qlandMarketplaceAddr2.buyFromMarketplace(addr1.address, 1, 3, 150);
+  await qlandMarketplaceAddr2.buyFromMarketplace(
+    addr1.address,
+    1,
+    3,
+    150 * 1e6
+  );
   console.log("Sell done");
-  logPriceStable("buyer balance", await usdc.balanceOf(addr1.address));
-  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
+  logPriceStable("buyer balance", await usdc.balanceOf(addr2.address));
+  logPriceStable("seller balance", await usdc.balanceOf(addr1.address));
   console.log(
     "p1 qland on sale:",
     await qlandMarketplace.getProjectItemsOnSale(1)
