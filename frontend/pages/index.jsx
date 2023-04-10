@@ -37,9 +37,13 @@ export default function App() {
       </Typography>
 
       {/*Block1 full width */}
-      <Box sx={{ width: "100%", px: 3, mb: 2 }}>
-        <img src="/images/landing/1-earth-satellite-view.jpg" />
-        <Typography variant="body2" component="p" sx={{ textAlign: "center" }}>
+      <Box sx={{ width: "100%", m: 2, mb: 4 }}>
+        <img src="/images/landing/1-earth-satellite-view.jpg" width="97%" />
+        <Typography
+          variant="body2"
+          component="p"
+          sx={{ textAlign: "center", margin: "auto" }}
+        >
           Finance what you see. See what you have financed.
         </Typography>
       </Box>
