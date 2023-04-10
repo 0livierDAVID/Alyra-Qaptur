@@ -2,16 +2,16 @@
   "5": {
     "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
     "main": {
-      "address": "0x843B321C3e747405F545C72128b817CE7aC4FAC5"
+      "address": "0xB1a6c7F75f715332dde5140DC94F9d90F03D496A"
     },
     "factory": {
-      "address": "0xe21BB7690a495F1fF7e1464bf466F4146E05E988"
+      "address": "0x324c569677dC062044f8d33ADF90De9198Ae7290"
     },
     "qlandMarketplace": {
-      "address": "0xc57343c0b921a1A1AE716Fa641fF5aDa73C659D7"
+      "address": "0xE1AC7Ee0F064a43e0FD3570FB5303869C953D900"
     },
     "reward": {
-      "address": "0xECfb43adA48533023156F650D5Ae4D0857479Fe4"
+      "address": "0xDCe9a3957e44bfdfB45BC32BB20BFed0d5685542"
     },
     "usdc": {
       "address": "0x65aFADD39029741B3b8f0756952C74678c9cEC93"
@@ -56,16 +56,16 @@
   "11155111": {
     "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
     "main": {
-      "address": "0x1e1284963d376CB77cb719CF8ac54De19A76D57C"
+      "address": "0xB782ae398033Aea6ED47bDd6C2ae9df5820A5e6f"
     },
     "factory": {
-      "address": "0x87F3cA809F3433a48bc0A7532c6CF31E1b91e549"
+      "address": "0xB91Db12658965bA07C7425c4DD4faccc7142d782"
     },
     "qlandMarketplace": {
-      "address": "0x632302dC3516D9e7c70aaF456B780057702E64f5"
+      "address": "0x672e8632d1e75c81ceB064FbDcd57a4511cB4A18"
     },
     "reward": {
-      "address": "0x3c4D1BDc21b2dC560c7d59FF69e8DC6E570f5ea0"
+      "address": "0x6fBb48f547ab8FeE951fA6975255A144050629cA"
     },
     "usdc": {
       "address": "0xda9d4f9b69ac6C22e444eD9aF0CfC043b7a7f53f"
