@@ -72,6 +72,31 @@ describe("QapturProjectFactory contract", function () {
         factory.connect(addr1).createNewProject(...projectValues)
       ).to.be.revertedWith("Ownable: caller is not the owner");
     });
+    it("Should revert if name is empty", async function () {
+      const { factory, owner, project } = await loadFixture(
+        deployQapturProjectFactoryFixture
+      );
+      await expect(
+        factory
+          .connect(owner)
+          .createNewProject("", project.url, project.totalSupply, project.price)
+      ).to.be.revertedWith("Name should be defined");
+    });
+    it("Should revert url is empty", async function () {
+      const { factory, owner, project } = await loadFixture(
+        deployQapturProjectFactoryFixture
+      );
+      await expect(
+        factory
+          .connect(owner)
+          .createNewProject(
+            project.name,
+            "",
+            project.totalSupply,
+            project.price
+          )
+      ).to.be.revertedWith("Url should be defined");
+    });
     it("Should store parameters of the project in QapturState", async function () {
       const { factory, qapturState, projectValues, project, owner } =
         await loadFixture(deployQapturProjectFactoryFixture);

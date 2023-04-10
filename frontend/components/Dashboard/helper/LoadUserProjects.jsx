@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function LoadUserProjects({ updateUserProjects }) {
   const contractsAvailable = useContractsAvailable();
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { main } = useContracts();
   const { qlandAbi, array: projectsArray } = useProjects();
   const dispatch = useProjectsDispatch();
@@ -21,13 +21,13 @@ export default function LoadUserProjects({ updateUserProjects }) {
   const [notif, setNotif] = useState(null);
 
   useEffect(() => {
-    loadProjects();
-  }, [contractsAvailable]);
+    //loadProjects();
+  }, [contractsAvailable, isConnected]);
 
   const checkUserBalance = async (project) => {
-    if (!contractsAvailable) return;
+    if (!contractsAvailable && !isConnected) return;
     try {
-      console.log(projectsArray);
+      //console.log(projectsArray);
       const {
         args: { id, qlandAddr },
       } = project;
@@ -47,14 +47,14 @@ export default function LoadUserProjects({ updateUserProjects }) {
   };
 
   const loadProjects = async () => {
-    if (!contractsAvailable) return;
+    if (!contractsAvailable && !isConnected) return;
     try {
       // console.log(main);
       // get events NewProjectDeployed from the contracts
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const filter = contract.filters.NewProjectDeployed();
       const projects = await contract.queryFilter(filter);
-      console.log(projects);
+      //console.log(projects);
 
       projects.forEach((project) => {
         checkUserBalance(project);

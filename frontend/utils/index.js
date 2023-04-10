@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 
 export const getIpfsUrl = (fileHash) => {
+  if (fileHash === "") return "";
   return `https://ipfs.io/ipfs/${fileHash}`;
 };
 

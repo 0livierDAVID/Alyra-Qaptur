@@ -37,6 +37,14 @@ contract QapturProjectFactory is Ownable {
         uint _totalSupply,
         uint _qlandPrice
     ) external onlyOwner {
+        require(
+            keccak256(abi.encodePacked(_name)) != keccak256(abi.encodePacked("")),
+            "Name should be defined"
+        );
+        require(
+            keccak256(abi.encodePacked(_jsonUrl)) != keccak256(abi.encodePacked("")),
+            "Url should be defined"
+        );
         address qlandAddr = deployQlandSmartContract(_name);
         address qco2Addr = address(0);
         //address qco2Addr = deployQco2SmartContract(_name);
