@@ -53,19 +53,30 @@ export default function App() {
         container
         spacing={2}
         direction="row"
-        justifyContent="space-around"
+        justifyContent="center"
         alignItems="center"
         sx={{ mb: 4 }}
       >
-        <Grid item xs={12} sm={6} sx={{}}>
-          <img
-            src="/images/landing/2-satellite.png"
-            width="350px"
-            margin="auto"
-          />
-          <Typography variant="body2" component="p">
-            Take back control of your carbon investments
-          </Typography>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          sx={{ display: "flex", flexDirection: "column" }}
+        >
+          <Box sx={{ alignSelf: "end", m: 2 }}>
+            <img
+              src="/images/landing/2-satellite.png"
+              width="350px"
+              margin="auto"
+            />
+            <Typography
+              variant="body2"
+              component="p"
+              sx={{ textAlign: "center" }}
+            >
+              Take back control of your carbon investments
+            </Typography>
+          </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography sx={{ color: "vars(--primary)" }} component="p">
