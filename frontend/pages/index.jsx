@@ -28,7 +28,7 @@ export default function App() {
       <Head>
         <title>Welcome page - Qaptur</title>
       </Head>
-      <Typography variant="h2" component="h1" sx={{ textAlign: "center" }}>
+      <Typography variant="h3" component="h1" sx={{ textAlign: "center" }}>
         The only carbon credits verified by satellite images and traced in the
         blockchain
       </Typography>
@@ -60,10 +60,10 @@ export default function App() {
         <Grid
           item
           xs={12}
-          sm={6}
+          md={6}
           sx={{ display: "flex", flexDirection: "column" }}
         >
-          <Box sx={{ alignSelf: "end", m: 2 }}>
+          <Box sx={{ alignSelf: { xs: "center", md: "end" }, m: 2 }}>
             <img
               src="/images/landing/2-satellite.png"
               width="350px"
@@ -78,10 +78,8 @@ export default function App() {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography sx={{ color: "vars(--primary)" }} component="p">
-            WHY CHOOSE US?
-          </Typography>
+        <Grid item xs={12} md={6}>
+          <Typography component="p">WHY CHOOSE US?</Typography>
           <Typography variant="h4" component="h2" sx={{ fontWeight: "bold" }}>
             Invest in trustworthy carbon assets
           </Typography>
