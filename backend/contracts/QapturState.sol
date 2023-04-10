@@ -7,7 +7,7 @@ import "./QapturProjectReward.sol";
 import "./QapturLandMarketplace.sol";
 
 // Uncomment this line to use console.log
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 /** TODO: 
     - optimize variable order and size (struct)
@@ -52,14 +52,18 @@ contract QapturState is Ownable {
 
     // Events
     // event config
-    event ContractAdressUpdated(string name, address contractAddress); // several events by contract type
+    event ContractAdressUpdated(string name, address contractAddr); // several events by contract type
     event NewProjectDeployed(
         uint id,
-        address qlandAddress,
-        address qco2Address,
+        address qlandAddr,
+        address qco2Addr,
         uint supply,
         uint price
     );
+    event UrlUpdated(uint projectId, string url);
+    event PriceUpdated(uint projectId, uint price);
+    event AvailableSupplyUpdated(uint projectId, uint supply);
+
 
     /*** CONFIGURATION onlyOwner ***/
     function setFactoryAddress(address _contractAddr) external onlyOwner {
@@ -131,7 +135,7 @@ contract QapturState is Ownable {
         uint _qlandPrice,
         string calldata _jsonUrl
     ) external isInternalContract {
-        console.log("AddProjectData", _qlandAddr);
+        // console.log("AddProjectData", _qlandAddr);
         projectId += 1;
         projects[projectId] = QapturProject(
             _qlandAddr,
@@ -151,11 +155,20 @@ contract QapturState is Ownable {
         );
     }
 
-    function updateSupply(
+    function updateUrl(
+        uint _projectId,
+        string calldata _newUrl
+    ) external isInternalContract {
+        projects[_projectId].url = _newUrl;
+        emit UrlUpdated(_projectId, _newUrl);
+    }
+
+    function updateAvailableSupply(
         uint _projectId,
         uint _newValue
     ) external isInternalContract {
         projects[_projectId].availableSupply = _newValue;
+        emit AvailableSupplyUpdated(_projectId, _newValue);
     }
 
     function updatePrice(
@@ -163,6 +176,7 @@ contract QapturState is Ownable {
         uint _newValue
     ) external isInternalContract {
         projects[_projectId].price = _newValue;
+        emit PriceUpdated(_projectId, _newValue);
     }
 
 }
