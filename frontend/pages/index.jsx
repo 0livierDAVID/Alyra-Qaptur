@@ -75,7 +75,7 @@ export default function App() {
             Invest in trustworthy carbon assets
           </Typography>
           <Typography variant="body2" component="h1">
-            Qaptur is fixing today's carbon credits limitation.
+            Qaptur is fixing today&apos;s carbon credits limitation.
           </Typography>
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -93,7 +93,7 @@ export default function App() {
                     variant="body2"
                     color="text.primary"
                   >
-                    Every carbon credits on Qaptur's marketplace have been
+                    Every carbon credits on Qaptur&apos;s marketplace have been
                     verified through remote sensing from European Space Agency
                     satellites data, ensuring an accurate calculation of CO2
                     uptakes.
@@ -116,8 +116,8 @@ export default function App() {
                     variant="body2"
                     color="text.primary"
                   >
-                    With Qaptur's blockchain protocol, your proofs of financing
-                    and proofs of offseting are secured over decades.
+                    With Qaptur&apos;s blockchain protocol, your proofs of
+                    financing and proofs of offseting are secured over decades.
                   </Typography>
                 }
               />
@@ -153,7 +153,7 @@ export default function App() {
           component="p"
         >
           DO YOU WANT TO OFFSET YOUR EMISSIONS RIGHT NOW OR DO YOU WANT TO
-          PREPARE YOUR COMPANY'S CARBON FUTURE STRATEGY?
+          PREPARE YOUR COMPANY&apos;S CARBON FUTURE STRATEGY?
         </Typography>
         <Typography
           variant="h4"
@@ -191,8 +191,8 @@ export default function App() {
             <CardContent>
               <Typography variant="body2">
                 1 QCO2 equals 1 carbon credit. In order to register it in your
-                carbon accounting, you just have to "burn" your QCO2 in the
-                blockchain, and claim your offset certificate.
+                carbon accounting, you just have to &quot;burn&quot; your QCO2
+                in the blockchain, and claim your offset certificate.
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
