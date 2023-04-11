@@ -18,9 +18,9 @@ import "@/styles/globals.css";
 const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }),
-    infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
-    publicProvider(),
+    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY, priority: 0 }),
+    infuraProvider({ apiKey: process.env.INFURA_API_KEY, priority: 0 }),
+    publicProvider({ priority: 1 }),
   ]
 );
 
