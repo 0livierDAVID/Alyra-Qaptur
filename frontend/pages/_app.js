@@ -7,8 +7,8 @@ import {
 import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { hardhat, polygonMumbai, goerli, sepolia } from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { infuraProvider } from "wagmi/providers/infura";
+// import { alchemyProvider } from "wagmi/providers/alchemy";
+// import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -18,8 +18,8 @@ import "@/styles/globals.css";
 const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY, priority: 0 }),
-    infuraProvider({ apiKey: process.env.INFURA_API_KEY, priority: 0 }),
+    // alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY, priority: 0 }),
+    // infuraProvider({ apiKey: process.env.INFURA_API_KEY, priority: 0 }),
     publicProvider({ priority: 1 }),
   ]
 );
@@ -28,7 +28,9 @@ const connectors = connectorsForWallets([
   {
     appName: "Qaptur",
     groupName: "Recommended",
-    wallets: [metaMaskWallet({ chains })],
+    /* /!\ the f...ing line that messed everything /!\ 
+     infinite 403 errors if activated */
+    // wallets: [metaMaskWallet({ chains })],
   },
 ]);
 
