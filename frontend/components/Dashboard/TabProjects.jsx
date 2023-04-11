@@ -10,13 +10,15 @@ export default function TabProjects({ projects, userProjects }) {
       let list = [];
       userProjects.map((uProject) => {
         const current = projects.find((project) => uProject.id === project.id);
-        list.push({
-          id: uProject.id,
-          name: current.name,
-          image: current.image,
-          country: current.attributes.country,
-          nbShare: uProject.balance,
-        });
+        if (current) {
+          list.push({
+            id: uProject.id,
+            name: current.name,
+            image: current.image,
+            country: current.attributes.country,
+            nbShare: uProject.balance,
+          });
+        }
       });
       setProjectList(list);
     }

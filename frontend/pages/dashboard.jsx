@@ -8,6 +8,7 @@ import LoadUserProjects from "@/components/Dashboard/helper/LoadUserProjects";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
 import useUserStatus from "@/hooks/useUserStatus";
 import { useProjects } from "@/context/projectsContext";
+import LoadUserTransactions from "@/components/Dashboard/helper/LoadUserTransactions";
 
 export default function Dashboard() {
   /** Data
@@ -17,6 +18,7 @@ export default function Dashboard() {
    */
   const { array: projects } = useProjects();
   const [userProjects, setUserProjects] = useState([]);
+  const [userTransactions, setUserTransactions] = useState([]);
   const { isConnected } = useUserStatus();
 
   const updateUserProjects = (newVal) => {
@@ -26,12 +28,24 @@ export default function Dashboard() {
     //console.log(userProjects);
   };
 
+  const updateUserTransactions = (newVal) => {
+    const array = userTransactions;
+    array.push(newVal);
+    setUserTransactions(array);
+    //console.log(userTransactions);
+  };
+
   return (
     <Layout>
       <LoadUserProjects
         projects={projects}
         userProjects={userProjects}
         updateUserProjects={updateUserProjects}
+      />
+      <LoadUserTransactions
+        projects={projects}
+        userTransactions={userTransactions}
+        updateUserTransactions={updateUserTransactions}
       />
       <Head>
         <title>My dashboasd - Qaptur</title>
@@ -44,7 +58,11 @@ export default function Dashboard() {
       {isConnected && (
         <>
           <Boxes projects={projects} userProjects={userProjects} />
-          <Assets projects={projects} userProjects={userProjects} />
+          <Assets
+            projects={projects}
+            userProjects={userProjects}
+            userTransactions={userTransactions}
+          />
         </>
       )}
     </Layout>

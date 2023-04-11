@@ -34,7 +34,7 @@ export default function LoadUserProjects({
       const {
         args: { id, qlandAddr },
       } = project;
-      console.log(qlandAddr);
+      // console.log(qlandAddr);
       // get balance of current user
       const contract = new ethers.Contract(qlandAddr, qlandAbi, provider);
       const balance = (await contract.balanceOf(address, 0)).toNumber();
@@ -54,11 +54,11 @@ export default function LoadUserProjects({
     try {
       // console.log(main);
       // get events NewProjectDeployed from the contracts
-      console.log(main.address);
+      // console.log(main.address);
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const filter = contract.filters.NewProjectDeployed();
       const projects = await contract.queryFilter(filter);
-      console.log(projects);
+      // console.log(projects);
 
       projects.forEach((project) => {
         checkUserBalance(project);

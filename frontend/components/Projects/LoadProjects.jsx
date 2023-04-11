@@ -99,7 +99,7 @@ export default function LoadProjects() {
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const filter = contract.filters.NewProjectDeployed();
       const projects = await contract.queryFilter(filter);
-      console.log(projects);
+      // console.log(projects);
       projects.forEach((project) => {
         const projectId = project.args.id.toNumber();
         // console.log(project);

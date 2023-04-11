@@ -6,10 +6,9 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Button,
 } from "@mui/material";
 
-export default function TabTransactions() {
+export default function TabTransactions({ userTransactions }) {
   return (
     <TableContainer component={Box}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
