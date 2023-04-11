@@ -16,7 +16,11 @@ import "@/styles/globals.css";
 
 const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+  [
+    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }),
+    infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
+    publicProvider(),
+  ]
 );
 
 const connectors = connectorsForWallets([
