@@ -29,7 +29,8 @@ export default function Dashboard() {
   return (
     <Layout>
       <LoadUserProjects
-        // userProjects={userProjects}
+        projects={projects}
+        userProjects={userProjects}
         updateUserProjects={updateUserProjects}
       />
       <Head>

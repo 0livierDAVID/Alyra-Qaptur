@@ -10,7 +10,11 @@ import useContractsAvailable from "@/hooks/useContractsAvailable";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function LoadUserProjects({ updateUserProjects }) {
+export default function LoadUserProjects({
+  projects,
+  userProjects,
+  updateUserProjects,
+}) {
   const contractsAvailable = useContractsAvailable();
   const { address, isConnected } = useAccount();
   const { main } = useContracts();
