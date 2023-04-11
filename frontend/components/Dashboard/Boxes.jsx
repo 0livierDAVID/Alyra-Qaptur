@@ -7,36 +7,42 @@ export default function Boxes() {
       spacing={1}
       sx={{ display: "flex", justifyContent: "space-around", m: 2 }}
     >
-      <Card>
-        <CardContent>
-          <Typography variant="h5" component="div" sx={{ textAlign: "center" }}>
-            354
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            t of CO2 removed
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent>
-          <Typography variant="h5" component="div" sx={{ textAlign: "center" }}>
-            3
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            projects supported
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent>
-          <Typography variant="h5" component="div" sx={{ textAlign: "center" }}>
-            3
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            co-benefits
-          </Typography>
-        </CardContent>
-      </Card>
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
+              354
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              t of CO2 removed
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
+              3
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              projects supported
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
+              3
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              co-benefits
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
     </Grid>
   );
 }
