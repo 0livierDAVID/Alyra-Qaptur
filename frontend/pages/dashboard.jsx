@@ -7,6 +7,7 @@ import Assets from "@/components/Dashboard/Assets";
 import LoadUserProjects from "@/components/Dashboard/helper/LoadUserProjects";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
 import useUserStatus from "@/hooks/useUserStatus";
+import { useProjects } from "@/context/projectsContext";
 
 export default function Dashboard() {
   /** Data
@@ -14,11 +15,13 @@ export default function Dashboard() {
    * - transactions market place filter from or to (address)
    *
    */
+  const { array: projects } = useProjects();
   const [userProjects, setUserProjects] = useState([]);
   const { isConnected } = useUserStatus();
 
   const updateUserProjects = (newVal) => {
-    const array = userProjects.push(newVal);
+    const array = userProjects;
+    array.push(newVal);
     setUserProjects(array);
     //console.log(userProjects);
   };
@@ -39,8 +42,8 @@ export default function Dashboard() {
 
       {isConnected && (
         <>
-          <Boxes />
-          <Assets />
+          <Boxes projects={projects} userProjects={userProjects} />
+          <Assets projects={projects} userProjects={userProjects} />
         </>
       )}
     </Layout>

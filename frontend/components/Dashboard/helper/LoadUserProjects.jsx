@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { Alert } from "@mui/material";
 
 import { useContracts } from "@/context/contractsContext";
-import { useProjects, useProjectsDispatch } from "@/context/projectsContext";
+import { useProjects } from "@/context/projectsContext";
 import useContractsAvailable from "@/hooks/useContractsAvailable";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,18 +14,17 @@ export default function LoadUserProjects({ updateUserProjects }) {
   const contractsAvailable = useContractsAvailable();
   const { address, isConnected } = useAccount();
   const { main } = useContracts();
-  const { qlandAbi, array: projectsArray } = useProjects();
-  const dispatch = useProjectsDispatch();
+  const { qlandAbi } = useProjects();
   const provider = useProvider();
 
   const [notif, setNotif] = useState(null);
 
   useEffect(() => {
-    //loadProjects();
+    loadProjects();
   }, [contractsAvailable, isConnected]);
 
   const checkUserBalance = async (project) => {
-    if (!contractsAvailable && !isConnected) return;
+    if (!contractsAvailable || !isConnected) return;
     try {
       //console.log(projectsArray);
       const {
@@ -47,14 +46,15 @@ export default function LoadUserProjects({ updateUserProjects }) {
   };
 
   const loadProjects = async () => {
-    if (!contractsAvailable && !isConnected) return;
+    if (!contractsAvailable || !isConnected) return;
     try {
       // console.log(main);
       // get events NewProjectDeployed from the contracts
+      console.log(main.address);
       const contract = new ethers.Contract(main.address, main.abi, provider);
       const filter = contract.filters.NewProjectDeployed();
       const projects = await contract.queryFilter(filter);
-      //console.log(projects);
+      console.log(projects);
 
       projects.forEach((project) => {
         checkUserBalance(project);

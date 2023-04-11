@@ -6,7 +6,7 @@ import TabCarbonCredits from "./TabCarbonCredits";
 import TabTransactions from "./TabTransactions";
 import TabArchive from "./TabArchive";
 
-export default function Assets() {
+export default function Assets({ projects, userProjects }) {
   const [activeTab, setActiveTab] = useState("0");
   const handleChange = (evt, newVal) => {
     setActiveTab(newVal);
@@ -26,7 +26,7 @@ export default function Assets() {
           </TabList>
         </Box>
         <TabPanel value="0">
-          <TabProjects />
+          <TabProjects projects={projects} userProjects={userProjects} />
         </TabPanel>
         <TabPanel value="1">
           <TabCarbonCredits />
