@@ -1,14 +1,15 @@
 /** WEB3: RainbowKit, WAGMI */
 import "@rainbow-me/rainbowkit/styles.css";
 import {
-  connectorsForWallets,
+  // connectorsForWallets,
+  getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
-import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
+// import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { hardhat, polygonMumbai, goerli, sepolia } from "wagmi/chains";
 // import { alchemyProvider } from "wagmi/providers/alchemy";
-// import { infuraProvider } from "wagmi/providers/infura";
+import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -19,20 +20,26 @@ const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
   [
     // alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY, priority: 0 }),
-    // infuraProvider({ apiKey: process.env.INFURA_API_KEY, priority: 0 }),
+    infuraProvider({ apiKey: process.env.INFURA_API_KEY, priority: 0 }),
     publicProvider({ priority: 1 }),
   ]
 );
 
-const connectors = connectorsForWallets([
-  {
-    appName: "Qaptur",
-    groupName: "Recommended",
-    /* /!\ the f...ing line that messed everything /!\ 
-     infinite 403 errors if activated */
-    // wallets: [metaMaskWallet({ chains })],
-  },
-]);
+const { connectors } = getDefaultWallets({
+  appName: "Qaptur",
+  chains,
+});
+
+/* /!\ https://www.rainbowkit.com/docs/custom-wallet-list /!\
+  Note: This API is unstable and likely to change in the near future. 
+  We recommend avoiding changes to the wallet list for now. */
+// const connectors = connectorsForWallets([
+//   {
+//     appName: "Qaptur",
+//     groupName: "Recommended",
+//     wallets: [metaMaskWallet({ chains })],
+//   },
+// ]);
 
 const wagmiClient = createClient({
   autoConnect: true,
