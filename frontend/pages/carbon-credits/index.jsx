@@ -5,6 +5,7 @@ import Layout from "@/components/Layout";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
 import CarbonCreditCard from "@/components/CarbonCredits/CarbonCreditCard";
 import useUserStatus from "@/hooks/useUserStatus";
+import StaticData from "@/components/Layout/helper/StaticData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,6 +13,7 @@ export default function CarbonCredits() {
   const { isConnected } = useUserStatus();
   return (
     <Layout>
+      <StaticData />
       <Head>
         <title>Carbon credits - Qaptur</title>
       </Head>
