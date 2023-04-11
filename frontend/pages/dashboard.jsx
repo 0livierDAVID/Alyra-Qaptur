@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Head from "next/head";
-import { useAccount } from "wagmi";
 import { Typography } from "@mui/material";
 import Layout from "@/components/Layout";
 import Boxes from "@/components/Dashboard/Boxes";
 import Assets from "@/components/Dashboard/Assets";
 import LoadUserProjects from "@/components/Dashboard/helper/LoadUserProjects";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
-import { red } from "@mui/material/colors";
+import useUserStatus from "@/hooks/useUserStatus";
 
 export default function Dashboard() {
   /** Data
@@ -16,7 +15,7 @@ export default function Dashboard() {
    *
    */
   const [userProjects, setUserProjects] = useState([]);
-  const { isConnected } = useAccount();
+  const { isConnected } = useUserStatus();
 
   const updateUserProjects = (newVal) => {
     const array = userProjects.push(newVal);
@@ -36,7 +35,6 @@ export default function Dashboard() {
       <Typography variant="h4" component="h1">
         Dashboard
       </Typography>
-
       {!isConnected && <NotConnectedAlert />}
 
       {isConnected && (
