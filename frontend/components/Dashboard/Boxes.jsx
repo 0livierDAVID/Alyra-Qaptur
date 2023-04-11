@@ -23,19 +23,6 @@ export default function Boxes({ projects, userProjects }) {
         <Card>
           <CardContent>
             <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
-              {0}
-              {/* temp */}
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              t of CO2 removed
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item>
-        <Card>
-          <CardContent>
-            <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
               {userProjects.length}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -52,6 +39,19 @@ export default function Boxes({ projects, userProjects }) {
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               co-benefits
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
+              {0}
+              {/* temp */}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              t of CO2 removed
             </Typography>
           </CardContent>
         </Card>
