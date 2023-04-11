@@ -8,6 +8,7 @@ import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { hardhat, polygonMumbai, goerli, sepolia } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -18,7 +19,7 @@ const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
   [
     alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }),
-    infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
+    infuraPro({ apiKey: process.env.INFURA_API_KEY }),
     publicProvider(),
   ]
 );
