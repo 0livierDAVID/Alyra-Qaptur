@@ -19,7 +19,7 @@ const { chains, provider } = configureChains(
   [hardhat, polygonMumbai, goerli, sepolia],
   [
     alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }),
-    infuraPro({ apiKey: process.env.INFURA_API_KEY }),
+    infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
     publicProvider(),
   ]
 );
