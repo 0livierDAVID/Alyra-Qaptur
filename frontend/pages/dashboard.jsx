@@ -32,16 +32,13 @@ export default function Dashboard() {
     // console.log("update", newVal);
     let array = userTransactions;
     array.push(...newVal);
-
     // sort by blockNumber
     array.sort((a, b) => a.blockNumber - b.blockNumber);
-
     // filter duplicates
     array = array.filter(
       (value, index, self) =>
         index === self.findIndex((t) => t.hash === value.hash)
     );
-
     setUserTransactions(array);
     // console.log("update", userTransactions);
   };

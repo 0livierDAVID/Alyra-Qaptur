@@ -11,7 +11,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function LoadUserTransactions({
   projects,
-  userTransactions,
   updateUserTransactions,
 }) {
   const contractsAvailable = useContractsAvailable();
@@ -35,9 +34,8 @@ export default function LoadUserTransactions({
       // console.log(transactions);
       const transacArr = Promise.all(
         transactions.map(async (tr) => {
-          // const tra = await tr.getBlock();
           const blockInfo = await tr.getBlock();
-          console.log(blockInfo);
+          // console.log(blockInfo);
           return {
             date: new Date(blockInfo.timestamp * 1000).toLocaleDateString(),
             timestamp: blockInfo.timestamp,
@@ -63,7 +61,6 @@ export default function LoadUserTransactions({
       if (!idProcessed.includes(id)) {
         setIdProcessed([...idProcessed, id]);
 
-        // console.log(qlandAddr);
         // get balance of current user
         const contract = new ethers.Contract(qlandAddr, qlandAbi, provider);
         // Buy
