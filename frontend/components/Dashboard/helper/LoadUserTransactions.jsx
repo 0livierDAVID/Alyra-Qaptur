@@ -32,7 +32,7 @@ export default function LoadUserTransactions({
 
   const processTransactions = async (type, transactions, id) => {
     if (transactions.length > 0) {
-      console.log(transactions);
+      // console.log(transactions);
       const transacArr = Promise.all(
         transactions.map(async (tr) => {
           // const tra = await tr.getBlock();
@@ -49,7 +49,7 @@ export default function LoadUserTransactions({
           };
         })
       );
-      console.log(await transacArr);
+      // console.log(await transacArr);
 
       updateUserTransactions(await transacArr);
     }

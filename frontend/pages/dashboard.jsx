@@ -43,7 +43,7 @@ export default function Dashboard() {
     );
 
     setUserTransactions(array);
-    console.log("update", userTransactions);
+    // console.log("update", userTransactions);
   };
 
   return (
