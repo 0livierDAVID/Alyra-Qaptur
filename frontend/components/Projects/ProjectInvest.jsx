@@ -14,6 +14,12 @@ import {
   CardActions,
   Button,
   FormControl,
+  Paper,
+  Table,
+  TableContainer,
+  TableBody,
+  TableRow,
+  TableCell,
 } from "@mui/material";
 import { useContracts } from "@/context/contractsContext";
 import { useProjectsDispatch } from "@/context/projectsContext";
@@ -94,12 +100,12 @@ export default function ProjectInvest({
           subheader="Invest now or you wille regret it soon!"
         />
         <CardContent>
-          <Typography
-            sx={{ mt: -2, mb: 2, fontSize: 14 }}
-            color="text.secondary"
-          >
+          <Typography sx={{ mt: -2, fontSize: 14 }} color="text.secondary">
             Estimated yearly carbon credits emission:{" "}
             {attributes?.annualCreditsExpected}
+          </Typography>
+          <Typography sx={{ mb: 2, fontSize: 14 }} color="text.secondary">
+            Available share: {availableSupply}
           </Typography>
           <FormControl fullWidth>
             <TextField
@@ -108,30 +114,51 @@ export default function ProjectInvest({
               label="Number of shares"
               type="number"
               value={nbShare}
+              InputProps={{
+                inputProps: {
+                  max: availableSupply,
+                  min: 0,
+                },
+              }}
               onChange={(evt) => setNbShare(evt.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           </FormControl>
-          <List>
-            <ListItem>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                Available share: {availableSupply}
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <Typography
-                sx={{ fontSize: 14, fontWeight: "bold" }}
-                color="text.secondary"
-              >
-                Total price: {nbShare * price || 0} USDC
-              </Typography>
-            </ListItem>
-          </List>
+
+          <TableContainer>
+            <Table aria-label="simple table">
+              <TableBody>
+                <TableRow>
+                  <TableCell align="left">Unit price:</TableCell>
+                  <TableCell align="right">{price} USDC</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">Quantity of shares:</TableCell>
+                  <TableCell align="center">{nbShare} </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                    Total price:
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                    {nbShare * price || 0} USDC
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
           {notif && <Alert severity={notif.type}>{notif.msg}</Alert>}
         </CardContent>
-        <CardActions sx={{ display: "flex", justifyContent: "end" }}>
+        <CardActions
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+            flexGrow: 1,
+            placeSelf: "end",
+          }}
+        >
           <Button variant="contained" onClick={buyShares}>
             Invest
           </Button>

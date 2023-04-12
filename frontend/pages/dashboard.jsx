@@ -9,6 +9,7 @@ import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
 import useUserStatus from "@/hooks/useUserStatus";
 import { useProjects } from "@/context/projectsContext";
 import LoadUserTransactions from "@/components/Dashboard/helper/LoadUserTransactions";
+import UsdcBalance from "@/components/Layout/helper/UsdcBalance";
 
 export default function Dashboard() {
   /** Data
@@ -55,6 +56,7 @@ export default function Dashboard() {
         userTransactions={userTransactions}
         updateUserTransactions={updateUserTransactions}
       />
+      {isConnected && <UsdcBalance />}
       <Head>
         <title>My dashboasd - Qaptur</title>
       </Head>

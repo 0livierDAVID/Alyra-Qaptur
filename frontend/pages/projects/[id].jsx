@@ -7,6 +7,7 @@ import Layout from "@/components/Layout";
 import ProjectSummary from "@/components/Projects/ProjectSummary";
 import ProjectDetails from "@/components/Projects/ProjectDetails";
 import ProjectInvest from "@/components/Projects/ProjectInvest";
+import UsdcBalance from "@/components/Layout/helper/UsdcBalance";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function Project() {
       <Head>
         <title>{project?.name} - Qaptur</title>
       </Head>
+      <UsdcBalance />
       <Typography variant="h4" component="h1">
         {project?.name}
       </Typography>
