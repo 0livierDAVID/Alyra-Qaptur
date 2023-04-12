@@ -1,5 +1,5 @@
 import Head from "next/head";
-
+import Link from "next/link";
 import Layout from "@/components/Layout";
 import {
   Typography,
@@ -225,10 +225,22 @@ export default function App() {
           Visit our marketplace
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button variant="contained" sx={{ m: 2 }}>
+          <Button
+            component={Link}
+            href="/projects"
+            title="Projects"
+            variant="contained"
+            sx={{ m: 2 }}
+          >
             Offset emissions
           </Button>
-          <Button variant="contained" sx={{ m: 2 }}>
+          <Button
+            component={Link}
+            href="/carbon-credits"
+            title="Carbon credits"
+            variant="contained"
+            sx={{ m: 2 }}
+          >
             Invest in carbon
           </Button>
         </Box>
