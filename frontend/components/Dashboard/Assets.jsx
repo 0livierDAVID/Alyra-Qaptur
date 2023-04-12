@@ -35,10 +35,7 @@ export default function Assets({ projects, userProjects, userTransactions }) {
           <TabArchive />
         </TabPanel>
         <TabPanel value="3">
-          <TabTransactions
-            projects={projects}
-            userTransactions={userTransactions}
-          />
+          <TabTransactions userTransactions={userTransactions} />
         </TabPanel>
       </TabContext>
     </Paper>

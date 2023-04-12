@@ -35,7 +35,7 @@ export default function Boxes({ projects, userProjects }) {
         <Card>
           <CardContent>
             <Typography variant="h5" component="p" sx={{ textAlign: "center" }}>
-              {nbCobenefits}
+              {nbCobenefits || 0}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               co-benefits
