@@ -55,6 +55,14 @@ import { ProjectsProvider } from "@/context/projectsContext";
 /** STYLE */
 // https://muhimasri.com/blogs/how-to-customize-theme-and-colors-in-material-ui/
 const theme = createTheme({
+  typography: {
+    fontFamily: [
+      "Montserrat",
+      // 'BlinkMacSystemFont',
+      // '"Segoe UI"',
+      ,
+    ].join(","),
+  },
   status: {
     danger: "#e53e3e",
   },

@@ -28,11 +28,20 @@ export default function App() {
       <Head>
         <title>Welcome page - Qaptur</title>
       </Head>
-      <Typography variant="h3" component="h1" sx={{ textAlign: "center" }}>
+      <Typography
+        variant="h3"
+        component="h1"
+        sx={{ textAlign: "center", fontWeight: "bold" }}
+      >
         The only carbon credits verified by satellite images and traced in the
         blockchain
       </Typography>
-      <Typography variant="h4" component="p" sx={{ textAlign: "center" }}>
+      <Typography
+        variant="h4"
+        component="p"
+        color="grey"
+        sx={{ textAlign: "center" }}
+      >
         Offset your residual emissions with confidence
       </Typography>
 
@@ -79,7 +88,9 @@ export default function App() {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography component="p">WHY CHOOSE US?</Typography>
+          <Typography component="p" color="secondary">
+            WHY CHOOSE US?
+          </Typography>
           <Typography variant="h4" component="h2" sx={{ fontWeight: "bold" }}>
             Invest in trustworthy carbon assets
           </Typography>
@@ -158,7 +169,8 @@ export default function App() {
 
       <Box sx={{ mb: 4 }}>
         <Typography
-          sx={{ color: "vars(--primary)", textAlign: "center" }}
+          color="secondary"
+          sx={{ textAlign: "center" }}
           component="p"
         >
           DO YOU WANT TO OFFSET YOUR EMISSIONS RIGHT NOW OR DO YOU WANT TO
@@ -212,7 +224,8 @@ export default function App() {
       </Box>
       <Box sx={{ mb: 4 }}>
         <Typography
-          sx={{ color: "vars(--primary)", textAlign: "center" }}
+          color="secondary"
+          sx={{ textAlign: "center" }}
           component="p"
         >
           READY TO OFFSET CURRENT AND FUTURE EMISSIONS?

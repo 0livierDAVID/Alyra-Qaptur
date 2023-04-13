@@ -13,7 +13,7 @@ export default function Assets({ projects, userProjects, userTransactions }) {
   };
   return (
     <Paper sx={{ width: "100%", p: 2 }}>
-      <Typography variant="h5" component="h2">
+      <Typography variant="h5" component="h2" sx={{ fontWeight: "bold" }}>
         My assets
       </Typography>
       <TabContext value={activeTab}>

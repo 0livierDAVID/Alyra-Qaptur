@@ -6,6 +6,7 @@ import Layout from "@/components/Layout";
 import ProjectCard from "@/components/Projects/ProjectCard";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
 import useUserStatus from "@/hooks/useUserStatus";
+import UsdcBalance from "@/components/Layout/helper/UsdcBalance";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,12 @@ export default function Projects() {
       <Head>
         <title>Projects list - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <UsdcBalance />
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         Projects
       </Typography>
 

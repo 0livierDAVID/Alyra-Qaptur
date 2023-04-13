@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Grid,
   Card,
   CardActionArea,
@@ -16,7 +17,7 @@ export default function CarbonCreditCard() {
       <Card variant="outlined">
         {/* <CardActionArea> */}
         <Chip sx={{ float: "right", m: 1 }} label="2020" />
-        <CardHeader subheader="Project name, Project location" />
+        <CardHeader subheader="Project name (Country)" />
 
         <CardMedia
           component="img"
@@ -25,8 +26,11 @@ export default function CarbonCreditCard() {
           alt="Project name"
         />
         <CardContent sx={{ display: "flex", justifyContent: "space-around" }}>
-          <Chip label="Available: 12" />
-          <Chip label="Price: 20 USDC" />
+          <Chip label={`Available: 10`} />
+          <Chip
+            label={`15 USDC`}
+            avatar={<Avatar alt="USDC logo" src="/images/usdc.svg" />}
+          />
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "end" }}>
           <Button variant="contained">Buy</Button>
