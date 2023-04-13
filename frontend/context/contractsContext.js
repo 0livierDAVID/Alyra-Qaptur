@@ -125,4 +125,21 @@ const initialContracts = {
   //   address: null,
   //   abi: qco2MarketplaceAbi,
   // },
+  explorer: {
+    5: {
+      name: "Etherscan",
+      tx: "https://goerli.etherscan.io/tx/",
+      address: "https://goerli.etherscan.io/address/",
+    },
+    80001: {
+      name: "Polygonscan",
+      tx: "https://mumbai.polygonscan.com/tx/",
+      address: "https://mumbai.polygonscan.com/address/",
+    },
+    11155111: {
+      name: "Etherscan",
+      tx: "https://sepolia.etherscan.io/tx/",
+      address: "https://sepolia.etherscan.io/address/",
+    },
+  },
 };

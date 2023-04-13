@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useProvider, useSigner } from "wagmi";
+import Link from "next/link";
+import { useNetwork, useProvider, useSigner } from "wagmi";
 import { BigNumber, Contract } from "ethers";
 import {
   Alert,
@@ -22,8 +23,8 @@ import {
 } from "@mui/material";
 import { useContracts } from "@/context/contractsContext";
 import { useProjectsDispatch } from "@/context/projectsContext";
-import { toMwei } from "@/utils";
 import ModalTransactionHelper from "@/components/Projects/ModalTransactionHelper";
+import { toMwei } from "@/utils";
 
 //modal style
 const style = {
@@ -45,7 +46,8 @@ export default function ProjectInvest({
   price,
   attributes,
 }) {
-  const { main, qlandMarketplace, usdc } = useContracts();
+  const { chain } = useNetwork();
+  const { main, qlandMarketplace, usdc, explorer } = useContracts();
   const dispatch = useProjectsDispatch();
   const { data: signer } = useSigner();
   const provider = useProvider();
@@ -59,6 +61,20 @@ export default function ProjectInvest({
   const [activeStep, setActiveStep] = useState(0);
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  // contract address preparation
+  const prepareAddress = (address) => {
+    if (!chain || !chain.id || chain.id === 31337) return address;
+    else {
+      const title = `See address on ${explorer[chain.id].name}`;
+      const url = `${explorer[chain.id].address}${address}`;
+      return (
+        <Link color="primary" href={url} target="_blank" title={title}>
+          {address}
+        </Link>
+      );
+    }
   };
 
   // usdc & market place contract
@@ -154,7 +170,7 @@ export default function ProjectInvest({
               Available share: {availableSupply}
             </Typography>
             <Typography sx={{ mb: 2, fontSize: 14 }} color="text.secondary">
-              Contract: {qlandAddr}
+              Contract: {prepareAddress(qlandAddr)}
             </Typography>
             <FormControl fullWidth>
               <TextField
