@@ -21,6 +21,7 @@ export default function ProjectDetails({ description, attributes }) {
                 height={42}
                 width={42}
                 alt={cobenefit[1]}
+                title={`${cobenefit[0]} - ${cobenefit[1].toUpperCase()}`}
               />
             ))}
           </Box>

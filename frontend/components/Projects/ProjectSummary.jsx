@@ -39,20 +39,20 @@ export default function ProjectSummary({
             </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">
+            <Typography color="text.secondary" component="div">
               Shares available:{" "}
               <Chip
                 sx={{ fontWeight: "bold" }}
-                label={`${availableSupply} / ${supply}`}
+                label={`${availableSupply || 0} / ${supply || 0}`}
               />
             </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">
+            <Typography color="text.secondary" component="div">
               Share unit price:{" "}
               <Chip
                 sx={{ fontWeight: "bold" }}
-                label={`${price} USDC`}
+                label={`${price || 0} USDC`}
                 avatar={<Avatar alt="USDC logo" src="/images/usdc.svg" />}
               />
             </Typography>
