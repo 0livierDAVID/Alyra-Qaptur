@@ -222,7 +222,7 @@ export default function App() {
           </Card>
         </Box>
       </Box>
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: 5 }}>
         <Typography
           color="secondary"
           sx={{ textAlign: "center" }}
