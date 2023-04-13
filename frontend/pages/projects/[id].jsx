@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import { useProjects } from "@/context/projectsContext";
 import Layout from "@/components/Layout";
 import ProjectSummary from "@/components/Projects/ProjectSummary";
