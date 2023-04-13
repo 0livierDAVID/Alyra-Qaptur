@@ -14,7 +14,14 @@ export default function Layout({ children }) {
       <Header />
       {/* {!isConnected && <Box sx={{ marginBottom: "5%" }}>{children}</Box>}
       {isConnected && ( */}
-      <Box sx={{ display: "flex", marginBottom: "5%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          marginBottom: "5%",
+          margin: "auto",
+        }}
+        maxWidth="xl"
+      >
         <Box sx={{ width: { xs: "70px", md: "200px" }, flexShrink: 0 }}>
           <LeftMenu />
           {isAdmin && <AdminMenu />}

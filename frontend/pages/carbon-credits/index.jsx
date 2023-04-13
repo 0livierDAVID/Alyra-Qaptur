@@ -17,7 +17,11 @@ export default function CarbonCredits() {
       <Head>
         <title>Carbon credits - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         Carbon credits
       </Typography>
       {!isConnected && <NotConnectedAlert />}

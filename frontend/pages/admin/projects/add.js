@@ -179,7 +179,11 @@ export default function ProjectAddition() {
       <Head>
         <title>New project deployement - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         Deploy a new project
       </Typography>
       {/* Step0 */}

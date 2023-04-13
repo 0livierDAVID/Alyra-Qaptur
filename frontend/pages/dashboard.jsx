@@ -60,7 +60,7 @@ export default function Dashboard() {
       <Head>
         <title>My dashboasd - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <Typography variant="h4" component="h1" sx={{ fontWeight: "bold" }}>
         Dashboard
       </Typography>
       {!isConnected && <NotConnectedAlert />}

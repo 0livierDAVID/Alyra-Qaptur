@@ -24,7 +24,11 @@ export default function Project() {
         <title>{project?.name} - Qaptur</title>
       </Head>
       <UsdcBalance />
-      <Typography variant="h4" component="h1">
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         {project?.name}
       </Typography>
       <Grid container spacing={1}>

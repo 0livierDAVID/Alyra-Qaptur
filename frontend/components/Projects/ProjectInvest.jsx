@@ -190,7 +190,9 @@ export default function ProjectInvest({
                     }}
                   >
                     <TableCell align="left">Quantity of shares:</TableCell>
-                    <TableCell align="center">{nbShare || 0} </TableCell>
+                    <TableCell align="right">
+                      {nbShare || 0} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                    </TableCell>
                   </TableRow>
                   <TableRow sx={{ td: { border: 0 } }}>
                     <TableCell align="left" sx={{ fontWeight: "bold" }}>

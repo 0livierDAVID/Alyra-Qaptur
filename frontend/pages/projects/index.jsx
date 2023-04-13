@@ -25,7 +25,11 @@ export default function Projects() {
         <title>Projects list - Qaptur</title>
       </Head>
       <UsdcBalance />
-      <Typography variant="h4" component="h1">
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         Projects
       </Typography>
 
