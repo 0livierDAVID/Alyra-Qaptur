@@ -10,6 +10,7 @@ import {
   CardContent,
   CardActions,
   Typography,
+  LinearProgress,
 } from "@mui/material";
 
 export default function ProjectCard({
@@ -35,6 +36,11 @@ export default function ProjectCard({
           href={`/projects/${id}`}
           sx={{ height: "100%" }}
         >
+          <LinearProgress
+            variant="determinate"
+            color="secondary"
+            value={Math.round(((supply - availableSupply) / supply) * 100)}
+          />
           <CardHeader title={name} subheader={country} />
           <CardMedia component="img" height="140" image={image} alt={name} />
           <CardContent>
