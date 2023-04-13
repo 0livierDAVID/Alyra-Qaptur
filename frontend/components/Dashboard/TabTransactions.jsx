@@ -1,3 +1,5 @@
+import { useNetwork } from "wagmi";
+import { useContracts } from "@/context/contractsContext";
 import {
   Box,
   TableContainer,
@@ -7,8 +9,23 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
+import Link from "next/link";
 
 export default function TabTransactions({ userTransactions }) {
+  const { explorer } = useContracts();
+  const { chain } = useNetwork();
+  const prepareHash = (hash) => {
+    if (chain.id === 31337) return hash;
+    else {
+      const title = `See transaction on ${explorer[chain.id].name}`;
+      const url = `${explorer[chain.id].tx}${hash}`;
+      return (
+        <Link href={url} target="_blank" title={title}>
+          {hash}
+        </Link>
+      );
+    }
+  };
   return (
     <TableContainer component={Box}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -31,7 +48,7 @@ export default function TabTransactions({ userTransactions }) {
               <TableCell align="center">{tr.type}</TableCell>
               <TableCell align="center">{tr.projectId}</TableCell>
               <TableCell align="center">{tr.nbShares}</TableCell>
-              <TableCell>{tr.hash}</TableCell>
+              <TableCell>{prepareHash(tr.hash)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
