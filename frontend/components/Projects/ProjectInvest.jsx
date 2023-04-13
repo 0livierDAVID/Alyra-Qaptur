@@ -65,7 +65,7 @@ export default function ProjectInvest({
 
   // contract address preparation
   const prepareAddress = (address) => {
-    if (chain.id === 31337) return address;
+    if (!chain || !chain.id || chain.id === 31337) return address;
     else {
       const title = `See address on ${explorer[chain.id].name}`;
       const url = `${explorer[chain.id].address}${address}`;
