@@ -1,20 +1,7 @@
 const { ethers } = require("hardhat");
-
 const fs = require("fs");
-
+const { logPriceStable, exportContractData } = require("../helper/index");
 const priceStableFormat = (amount) => ethers.utils.formatUnits(amount, 6);
-
-const logPriceStable = (msg, amount) =>
-  console.log(msg, priceStableFormat(amount), "USDC");
-
-const exportContractData = (chainId, jsonContent) => {
-  const fileName = "../frontend/contracts/contracts.json";
-  const file = require(`../${fileName}`);
-  // console.log(file);
-  file[chainId] = jsonContent;
-  // console.log(file);
-  fs.writeFileSync(fileName, JSON.stringify(file, null, 2));
-};
 
 async function qaptur() {
   // get signers
@@ -78,14 +65,16 @@ async function qaptur() {
   );
 
   console.log("USDC address:", usdc.address);
-  logPriceStable("total supply", await usdc.totalSupply());
-  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
+  // logPriceStable("total supply", await usdc.totalSupply());
+  // logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
 
+  console.log("--------------------------------------");
   // Deploy QapturState contract
   const QapturState = await ethers.getContractFactory("QapturState");
   const qapturState = await QapturState.deploy();
   console.log("QapturState address:", qapturState.address);
 
+  console.log("--------------------------------------");
   // Deploy QLAND Marketplace contract
   const QlandMarketplace = await ethers.getContractFactory(
     "QapturLandMarketplace"
@@ -97,11 +86,13 @@ async function qaptur() {
   );
   console.log("QapturLandMarketplace address:", qlandMarketplace.address);
 
+  // console.log("--------------------------------------");
   // Deploy QCO2 Marketplace contract
   // const Qco2Marketplace = await ethers.getContractFactory("QapturCo2Marketplace");
   // const qco2Marketplace = await Qco2Marketplace.deploy(qapturState.address, usdc.address, deployer.address);
   // console.log("QapturCo2Marketplace address:", qco2Marketplace.address);
 
+  console.log("--------------------------------------");
   // Deploy QapturProjectFactory contract
   const Factory = await ethers.getContractFactory("QapturProjectFactory");
   const factory = await Factory.deploy(
@@ -110,17 +101,22 @@ async function qaptur() {
   );
   console.log("QapturProjectFactory address:", factory.address);
 
+  console.log("--------------------------------------");
   // Deploy QapturProjectReward contract
   const Reward = await ethers.getContractFactory("QapturProjectReward");
   const reward = await Reward.deploy();
   console.log("QapturProjectReward address:", reward.address);
 
-  // Deploy QapturState configuration contract
+  console.log("--------------------------------------");
+  console.log("QapturState contract configuration");
+  // QapturState configuration contract
   await qapturState.setFactoryAddress(factory.address);
   await qapturState.setQlandMarketplaceAddress(qlandMarketplace.address);
   //await qapturState.setQco2MarketplaceAddress(qco2Marketplace.address);
   await qapturState.setRewardAddress(reward.address);
 
+  console.log("Export contracts addresses in a json file");
+  console.log("--------------------------------------");
   /** JSON DATA EXPORT: contract addresses for frontend */
   const jsonContent = {
     deployer: deployer.address,
@@ -146,7 +142,9 @@ async function qaptur() {
     },
   };
   exportContractData(chainId, jsonContent);
+  console.log("--------------------------------------");
 
+  console.log("Export abi in the front contracts folder");
   /** CONTRACT ABI COPY: contract's abi for frontend */
   const contractsAbi = [
     "QapturCo2",
@@ -168,6 +166,9 @@ async function qaptur() {
       }
     );
   });
+  console.log("--------------------------------------");
+  console.log("-----------DEPLOYMENT ENDED-----------");
+  console.log("--------------------------------------");
 }
 
 qaptur()

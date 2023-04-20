@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { Grid, List, ListItem, Typography } from "@mui/material";
+import { Grid, List, ListItem, Typography, Chip, Avatar } from "@mui/material";
 
 export default function ProjectSummary({
   name,
   image,
   supply,
+  availableSupply,
   price,
   attributes,
 }) {
@@ -38,23 +39,25 @@ export default function ProjectSummary({
             </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">Shares: {supply}</Typography>
+            <Typography color="text.secondary" component="div">
+              Shares available:{" "}
+              <Chip
+                sx={{ fontWeight: "bold" }}
+                label={`${availableSupply || 0} / ${supply || 0}`}
+              />
+            </Typography>
           </ListItem>
           <ListItem>
-            <Typography color="text.secondary">
-              Share unit price: {price} USDC
+            <Typography color="text.secondary" component="div">
+              Share unit price:{" "}
+              <Chip
+                sx={{ fontWeight: "bold" }}
+                label={`${price || 0} USDC`}
+                avatar={<Avatar alt="USDC logo" src="/images/usdc.svg" />}
+              />
             </Typography>
           </ListItem>
         </List>
-        {/* <List dense={dense}>
-          {generate(
-            <ListItem>
-              <ListItemText
-                primary="Single-line item"
-              />
-            </ListItem>
-          )}
-        </List> */}
       </Grid>
     </>
   );

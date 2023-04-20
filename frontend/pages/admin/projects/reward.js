@@ -13,6 +13,7 @@ import {
   Button,
 } from "@mui/material";
 import Layout from "@/components/Layout";
+import StaticData from "@/components/Layout/helper/StaticData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,10 +48,11 @@ export default function ProjectReward() {
   };
   return (
     <Layout>
+      <StaticData />
       <Head>
         <title>Project carbon credits reward - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <Typography variant="h4" component="h1" sx={{ fontWeight: "bold" }}>
         Emit project carbon credits reward
       </Typography>
       <Paper sx={{ mb: 2, p: 2 }}>

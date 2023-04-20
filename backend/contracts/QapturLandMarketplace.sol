@@ -65,7 +65,7 @@ contract QapturLandMarketplace is Ownable {
     }
     
     // update qty or remove index
-    function updateOnSaleTokenQty(uint _projectId, uint _index, uint _qtyLeft) internal returns (uint) {
+    function updateOnSaleTokenQty(uint _projectId, uint _index, uint _qtyLeft) internal{
         if (_qtyLeft == 0){
             delete projectOnSaleTokens[_projectId][_index];
         } else {
@@ -79,7 +79,7 @@ contract QapturLandMarketplace is Ownable {
         uint _projectId,
         uint _tokenAmount
     ) external {
-        (address qlandAddress,,uint totalSupply, uint availableSupply, uint price,,) = stateContract.projects(_projectId);
+        (address qlandAddress,,, uint availableSupply, uint price,,) = stateContract.projects(_projectId);
         require( // check supply
             availableSupply >= _tokenAmount,
             "Insufficient supply"

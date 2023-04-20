@@ -1,11 +1,12 @@
 import Head from "next/head";
-import { useAccount } from "wagmi";
 import { Inter } from "next/font/google";
 import { Grid, Typography } from "@mui/material";
 import { useProjects } from "@/context/projectsContext";
 import Layout from "@/components/Layout";
 import ProjectCard from "@/components/Projects/ProjectCard";
 import NotConnectedAlert from "@/components/Layout/helper/NotConnectedAlert";
+import useUserStatus from "@/hooks/useUserStatus";
+import UsdcBalance from "@/components/Layout/helper/UsdcBalance";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,7 @@ export default function Projects() {
    * - one request by card for details (hidden by default) show when data available
    *
    */
-  const { isConnected } = useAccount();
+  const { isConnected } = useUserStatus();
   const { array: projectsArray } = useProjects();
 
   return (
@@ -23,7 +24,12 @@ export default function Projects() {
       <Head>
         <title>Projects list - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <UsdcBalance />
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         Projects
       </Typography>
 

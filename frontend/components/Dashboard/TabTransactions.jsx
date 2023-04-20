@@ -1,3 +1,5 @@
+import { useNetwork } from "wagmi";
+import { useContracts } from "@/context/contractsContext";
 import {
   Box,
   TableContainer,
@@ -6,48 +8,49 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Button,
 } from "@mui/material";
+import Link from "next/link";
 
-export default function TabTransactions() {
+export default function TabTransactions({ userTransactions }) {
+  const { explorer } = useContracts();
+  const { chain } = useNetwork();
+  const prepareHash = (hash) => {
+    if (chain.id === 31337) return hash;
+    else {
+      const title = `See transaction on ${explorer[chain.id].name}`;
+      const url = `${explorer[chain.id].tx}${hash}`;
+      return (
+        <Link href={url} target="_blank" title={title}>
+          {hash}
+        </Link>
+      );
+    }
+  };
   return (
     <TableContainer component={Box}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Hash</TableCell>
-            <TableCell align="center">Date</TableCell>
-            <TableCell align="right">Event type</TableCell>
-            <TableCell align="center">...</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell align="center">Action</TableCell>
+            <TableCell align="center">Project</TableCell>
+            <TableCell align="center">Shares</TableCell>
+            <TableCell>Transaction hash</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>0x0dcc08997fcf72269de</TableCell>
-            <TableCell align="center">29/01/2021</TableCell>
-            <TableCell align="right">Buy</TableCell>
-            <TableCell align="center">...</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>0x0dcc08997fcf72269de</TableCell>
-            <TableCell align="center">29/01/2021</TableCell>
-            <TableCell align="right">Buy</TableCell>
-            <TableCell align="center">...</TableCell>
-          </TableRow>
-          {/* {rows.map((row) => (
+          {userTransactions.map((tr) => (
             <TableRow
-              key={row.name}
+              key={tr.timestamp}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{tr.date}</TableCell>
+              <TableCell align="center">{tr.type}</TableCell>
+              <TableCell align="center">{tr.projectId}</TableCell>
+              <TableCell align="center">{tr.nbShares}</TableCell>
+              <TableCell>{prepareHash(tr.hash)}</TableCell>
             </TableRow>
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

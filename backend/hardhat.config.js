@@ -12,6 +12,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 const PRIVATE_KEY2 = process.env.PRIVATE_KEY_2 || "";
 const PRIVATE_KEY3 = process.env.PRIVATE_KEY_3 || "";
 const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY || "";
+const POLYGONSCAN_KEY = process.env.POLYGONSCAN_KEY || "";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -52,7 +53,7 @@ module.exports = {
     apiKey: {
       goerli: ETHERSCAN_KEY,
       sepolia: ETHERSCAN_KEY,
-      // mumbai: ETHERSCAN_KEY,
+      polygonMumbai: POLYGONSCAN_KEY,
     },
   },
   namedAccounts: {

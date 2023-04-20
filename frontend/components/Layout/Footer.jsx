@@ -3,9 +3,9 @@ import { Paper, Typography } from "@mui/material";
 export default function Footer() {
   return (
     <Paper
+      square
       component="footer"
       variant="outlined"
-      color="neutral"
       sx={{
         justifyContent: "center",
         display: "flex",
@@ -13,9 +13,14 @@ export default function Footer() {
         position: "fixed",
         bottom: 0,
         width: "100%",
+        background: "#59CCCF",
       }}
     >
-      <Typography variant="caption" py={2}>
+      <Typography
+        variant="caption"
+        py={2}
+        sx={{ color: "white", fontWeight: "bold" }}
+      >
         &copy; Alyra x Qaptur
       </Typography>
     </Paper>
