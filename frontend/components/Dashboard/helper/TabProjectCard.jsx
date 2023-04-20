@@ -1,23 +1,19 @@
 import { Grid, Card, CardMedia, CardContent, Typography } from "@mui/material";
 
-export default function TabProjectCard() {
+export default function TabProjectCard({ id, name, country, nbShare, image }) {
   return (
     <Grid item xs={6} sm={4} lg={3} xl={2}>
       <Card variant="outlined">
-        <CardMedia
-          component="img"
-          image="/images/projects/project-1.png"
-          alt="Project name"
-        />
+        <CardMedia component="img" image={image} alt={name} />
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Project name
+            {name}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Project location
+            {country}
           </Typography>
           <Typography variant="h5" component="div" sx={{ textAlign: "center" }}>
-            3 shares
+            {nbShare} share(s)
           </Typography>
         </CardContent>
       </Card>

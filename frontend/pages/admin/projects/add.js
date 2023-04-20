@@ -15,6 +15,7 @@ import {
   Input,
   Button,
   Alert,
+  Box,
 } from "@mui/material";
 import { useContracts } from "@/context/contractsContext";
 import Layout from "@/components/Layout";
@@ -97,10 +98,13 @@ export default function ProjectAddition() {
             "Content-Type": "multipart/form-data",
           },
         });
-        setImgHash(resFile.data.IpfsHash);
+        const ipfsHash = resFile.data.IpfsHash;
+        setImgHash(ipfsHash);
+        // console.log("image file:", ipfsHash);
+        console.log("image url:", getIpfsUrl(ipfsHash));
         setNotif2({
           type: "success",
-          msg: `IpfsHash: ${resFile.data.IpfsHash} | PinSize: ${resFile.data.PinSize}`,
+          msg: `IpfsHash: ${ipfsHash} | PinSize: ${resFile.data.PinSize}`,
         });
       } catch (error) {
         setNotif2({
@@ -125,7 +129,8 @@ export default function ProjectAddition() {
         },
       });
       const ipfsHash = resFile.data.IpfsHash;
-      console.log(ipfsHash);
+      // console.log("json file:", ipfsHash);
+      console.log("json url:", getIpfsUrl(ipfsHash));
       if (ipfsHash === "") {
         setNotif3({
           type: "error",
@@ -179,7 +184,11 @@ export default function ProjectAddition() {
       <Head>
         <title>New project deployement - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         Deploy a new project
       </Typography>
       {/* Step0 */}
@@ -258,7 +267,7 @@ export default function ProjectAddition() {
         )}
       </Paper>
       {/* Step3 */}
-      <Paper sx={{ mb: 2, p: 2 }}>
+      <Paper sx={{ mb: 5, p: 2 }}>
         <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Step 3: Generate and upload metadata and create project&apos;s
           smart-contracts
@@ -298,6 +307,7 @@ export default function ProjectAddition() {
           </Alert>
         )}
       </Paper>
+      <Box sx={{ mb: 5 }} />
     </Layout>
   );
 }

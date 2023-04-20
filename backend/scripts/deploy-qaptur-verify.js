@@ -1,10 +1,12 @@
-const { ethers } = require("hardhat");
+const { ethers, run } = require("hardhat");
 const fs = require("fs");
-const { logPriceStable, exportContractData } = require("../helper/index");
+const { exportContractData, verifyContract } = require("../helper/index");
 
 async function qaptur() {
   // get signers
   const [deployer, addr1, addr2] = await ethers.getSigners();
+  const WAIT_BLOCK_CONFIRMATIONS = 6;
+
   console.log("Deploying contracts with the account:", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
@@ -56,23 +58,26 @@ async function qaptur() {
     usdc = await ethers.getContractAt("IERC20", usdcAddr);
   }
 
-  await usdc.connect(addr1).approve(addr2.address, 100 * 1e6);
-  logPriceStable(
-    "marketplace allowance for addr1",
-    await usdc.allowance(addr1.address, addr2.address)
-  );
+  // const usdcAddrtest = usdc.connect(addr1);
+  // await usdcAddrtest.approve(addr2.address, 100 * 1e6);
+  // logPriceStable(
+  //   "marketplace allowance for addr1",
+  //   await usdcAddrtest.allowance(addr1.address, addr2.address)
+  // );
 
-  console.log("USDC address:", usdc.address);
+  // console.log("USDC address:", usdc.address);
   // logPriceStable("total supply", await usdc.totalSupply());
   // logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
 
+  // Deploy and verify QapturState contract
   console.log("--------------------------------------");
-  // Deploy QapturState contract
   const QapturState = await ethers.getContractFactory("QapturState");
   const qapturState = await QapturState.deploy();
   console.log("QapturState address:", qapturState.address);
 
+  await verifyContract(qapturState, [], chainId);
   console.log("--------------------------------------");
+
   // Deploy QLAND Marketplace contract
   const QlandMarketplace = await ethers.getContractFactory(
     "QapturLandMarketplace"
@@ -84,13 +89,28 @@ async function qaptur() {
   );
   console.log("QapturLandMarketplace address:", qlandMarketplace.address);
 
-  // console.log("--------------------------------------");
+  await verifyContract(
+    qlandMarketplace,
+    [qapturState.address, usdc.address, deployer.address],
+    chainId
+  );
+
+  console.log("--------------------------------------");
+
   // Deploy QCO2 Marketplace contract
   // const Qco2Marketplace = await ethers.getContractFactory("QapturCo2Marketplace");
   // const qco2Marketplace = await Qco2Marketplace.deploy(qapturState.address, usdc.address, deployer.address);
   // console.log("QapturCo2Marketplace address:", qco2Marketplace.address);
+  // console.log("Wait 6 blocks and verify contract...");
+  // await qco2Marketplace.deployTransaction.wait(WAIT_BLOCK_CONFIRMATIONS);
 
-  console.log("--------------------------------------");
+  // await run(`verify:verify`, {
+  //   address: qco2Marketplace.address,
+  //   constructorArguments: [qapturState.address, usdc.address, deployer.address],
+  // });
+  // console.log("QapturCo2Marketplace contract verification: DONE!");
+  // console.log("--------------------------------------");
+
   // Deploy QapturProjectFactory contract
   const Factory = await ethers.getContractFactory("QapturProjectFactory");
   const factory = await Factory.deploy(
@@ -99,22 +119,30 @@ async function qaptur() {
   );
   console.log("QapturProjectFactory address:", factory.address);
 
+  await verifyContract(
+    factory,
+    [qapturState.address, qlandMarketplace.address],
+    chainId
+  );
   console.log("--------------------------------------");
+
   // Deploy QapturProjectReward contract
   const Reward = await ethers.getContractFactory("QapturProjectReward");
   const reward = await Reward.deploy();
   console.log("QapturProjectReward address:", reward.address);
 
+  await verifyContract(reward, [], chainId);
   console.log("--------------------------------------");
+
   console.log("QapturState contract configuration");
-  // QapturState configuration contract
+  // Deploy QapturState configuration contract
   await qapturState.setFactoryAddress(factory.address);
   await qapturState.setQlandMarketplaceAddress(qlandMarketplace.address);
   //await qapturState.setQco2MarketplaceAddress(qco2Marketplace.address);
   await qapturState.setRewardAddress(reward.address);
+  console.log("--------------------------------------");
 
   console.log("Export contracts addresses in a json file");
-  console.log("--------------------------------------");
   /** JSON DATA EXPORT: contract addresses for frontend */
   const jsonContent = {
     deployer: deployer.address,
@@ -167,122 +195,6 @@ async function qaptur() {
   console.log("--------------------------------------");
   console.log("-----------DEPLOYMENT ENDED-----------");
   console.log("--------------------------------------");
-
-  /** DATA ADDITION for contract testing */
-  console.log("--------------------------------------");
-  console.log("Deploying new smart contracts using factory");
-
-  result = await factory.createNewProject(
-    "Afforestation Of Degraded Grasslands In Vichada",
-    "https://ipfs.io/ipfs/bafkreih2jw4ckqysahsvbp7wasnvnab6rhyaswdyef7a4ygxdv25desteq",
-    30,
-    10 * 1e6
-  );
-  if (chainId !== 31337) await result.wait(1);
-
-  //  callStatis to get the value returned by the function
-  result = await factory.createNewProject(
-    "Withoneseed Timor Leste Community Forestry Program",
-    "https://ipfs.io/ipfs/bafkreigu7u22uidmq53pibl6wmoqnnqwqqeiqp5ejxsa4b6bqxucpq2v34",
-    15,
-    20 * 1e6
-  );
-  if (chainId !== 31337) await result.wait(1);
-
-  let [addrQland] = await qapturState.projects(1);
-  console.log("qland contract 1:", addrQland);
-
-  console.log("--------------------------------------");
-  console.log("Connect to qland smart contract");
-  const qland = await ethers.getContractAt("QapturLand", addrQland); //OK
-
-  console.log("--------------------------------------");
-  console.log("Buy initial supply");
-
-  // approve on ERC20 contract
-  result = await usdc
-    .connect(addr1)
-    .approve(qlandMarketplace.address, 100 * 1e6);
-  if (chainId !== 31337) await result.wait(1);
-  logPriceStable(
-    "marketplace allowance for addr1",
-    await usdc.connect(addr1).allowance(addr1.address, qlandMarketplace.address)
-  );
-
-  // buy on qlandMarket
-  console.log(
-    "p1 qland available supply:",
-    (await qapturState.getAvailableSupply(1)).toString()
-  );
-  logPriceStable("buyer balance", await usdc.balanceOf(addr1.address));
-  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
-  result = await qlandMarketplace.connect(addr1).buyFromInitialSupply(1, 10);
-  if (chainId !== 31337) await result.wait(1);
-  console.log("Sell done");
-  logPriceStable("buyer balance", await usdc.balanceOf(addr1.address));
-  logPriceStable("deployer balance", await usdc.balanceOf(deployer.address));
-  console.log(
-    "p1 qland available supply:",
-    (await qapturState.getAvailableSupply(1)).toString()
-  );
-  console.log(
-    "adr1 p1 qland balance:",
-    (await qland.balanceOf(addr1.address, 0)).toString()
-  );
-
-  console.log("--------------------------------------");
-  console.log("Add to market place");
-
-  console.log("add");
-  result = await qlandMarketplace
-    .connect(addr1)
-    .addItemToMarketplace(1, 10, 150 * 1e6);
-  if (chainId !== 31337) await result.wait(1);
-  //qland allowance to sc
-  console.log("allowance");
-  result = await await qland
-    .connect(addr1)
-    .setApprovalForAll(qlandMarketplace.address, true);
-  if (chainId !== 31337) await result.wait(1);
-
-  console.log("--------------------------------------");
-  console.log("Buy from market place");
-
-  // approve on ERC20 contract
-  result = await usdc
-    .connect(addr2)
-    .approve(qlandMarketplace.address, 450 * 1e6);
-  if (chainId !== 31337) await result.wait(1);
-  logPriceStable(
-    "marketplace allowance for addr1",
-    await usdc.allowance(addr2.address, qlandMarketplace.address)
-  );
-
-  console.log(
-    "p1 qland on sale:",
-    await qlandMarketplace.getProjectItemsOnSale(1)
-  );
-  logPriceStable("buyer balance", await usdc.balanceOf(addr2.address));
-  logPriceStable("seller balance", await usdc.balanceOf(addr1.address));
-  result = await qlandMarketplace
-    .connect(addr2)
-    .buyFromMarketplace(addr1.address, 1, 3, 150 * 1e6);
-  if (chainId !== 31337) await result.wait(1);
-  console.log("Sell done");
-  logPriceStable("buyer balance", await usdc.balanceOf(addr2.address));
-  logPriceStable("seller balance", await usdc.balanceOf(addr1.address));
-  console.log(
-    "p1 qland on sale:",
-    await qlandMarketplace.getProjectItemsOnSale(1)
-  );
-  console.log(
-    "adr1 p1 qland balance:",
-    (await qland.balanceOf(addr1.address, 0)).toString()
-  );
-  console.log(
-    "adr2 p1 qland balance:",
-    (await qland.balanceOf(addr2.address, 0)).toString()
-  );
 }
 
 qaptur()

@@ -1,12 +1,13 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import { useProjects } from "@/context/projectsContext";
 import Layout from "@/components/Layout";
 import ProjectSummary from "@/components/Projects/ProjectSummary";
 import ProjectDetails from "@/components/Projects/ProjectDetails";
 import ProjectInvest from "@/components/Projects/ProjectInvest";
+import UsdcBalance from "@/components/Layout/helper/UsdcBalance";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,12 @@ export default function Project() {
       <Head>
         <title>{project?.name} - Qaptur</title>
       </Head>
-      <Typography variant="h4" component="h1">
+      <UsdcBalance />
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 1 }}
+      >
         {project?.name}
       </Typography>
       <Grid container spacing={1}>

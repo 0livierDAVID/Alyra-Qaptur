@@ -6,14 +6,14 @@ import TabCarbonCredits from "./TabCarbonCredits";
 import TabTransactions from "./TabTransactions";
 import TabArchive from "./TabArchive";
 
-export default function Assets() {
+export default function Assets({ projects, userProjects, userTransactions }) {
   const [activeTab, setActiveTab] = useState("0");
   const handleChange = (evt, newVal) => {
     setActiveTab(newVal);
   };
   return (
     <Paper sx={{ width: "100%", p: 2 }}>
-      <Typography variant="h5" component="h2">
+      <Typography variant="h5" component="h2" sx={{ fontWeight: "bold" }}>
         My assets
       </Typography>
       <TabContext value={activeTab}>
@@ -26,7 +26,7 @@ export default function Assets() {
           </TabList>
         </Box>
         <TabPanel value="0">
-          <TabProjects />
+          <TabProjects projects={projects} userProjects={userProjects} />
         </TabPanel>
         <TabPanel value="1">
           <TabCarbonCredits />
@@ -35,7 +35,7 @@ export default function Assets() {
           <TabArchive />
         </TabPanel>
         <TabPanel value="3">
-          <TabTransactions />
+          <TabTransactions userTransactions={userTransactions} />
         </TabPanel>
       </TabContext>
     </Paper>

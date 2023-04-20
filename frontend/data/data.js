@@ -25,7 +25,8 @@ const projects = [
     projectProponent: "Forest First Colombia SAS",
     otherEntities: "South Pole Carbon Asset Management SAS",
     verifier: "CCB Standards",
-    description: "",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur dolorem deserunt minima commodi consectetur repellat provident accusamus, ratione nesciunt perferendis voluptatem repudiandae autem dolorum facilis soluta illum sit adipisci dolor quidem harum obcaecati natus nobis rerum possimus. Non, dolorem quas voluptate, amet iure hic reprehenderit nobis minima quia tenetur id.",
     geographicalData:
       "https://drive.google.com/file/d/1rrPGoxL1FegRIf2nFBGLNEIltf7KdSdW/view?usp=sharing",
     webpage:

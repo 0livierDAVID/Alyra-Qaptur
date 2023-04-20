@@ -2,16 +2,16 @@
   "5": {
     "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
     "main": {
-      "address": "0xB1a6c7F75f715332dde5140DC94F9d90F03D496A"
+      "address": "0xFf5941674A1493ba92a2b22a568fBBb76C887Ac7"
     },
     "factory": {
-      "address": "0x324c569677dC062044f8d33ADF90De9198Ae7290"
+      "address": "0xd6DC709003818cC43b103C3D915C5802FF1B7532"
     },
     "qlandMarketplace": {
-      "address": "0xE1AC7Ee0F064a43e0FD3570FB5303869C953D900"
+      "address": "0x265c3d95e9571c22ecfBf77CdCDaFD5661baD0A4"
     },
     "reward": {
-      "address": "0xDCe9a3957e44bfdfB45BC32BB20BFed0d5685542"
+      "address": "0x63d5AFa36ba97F29BB99d4Ef65406B9770dBD6c9"
     },
     "usdc": {
       "address": "0x65aFADD39029741B3b8f0756952C74678c9cEC93"
@@ -38,16 +38,16 @@
   "80001": {
     "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
     "main": {
-      "address": "0x090A444c30eb94832990657f84B8002Eb5535264"
+      "address": "0x9ece4F3c2ba74698B930348FE1E39CC426D26f10"
     },
     "factory": {
-      "address": "0x92f1dbdDE1b72CeA454256d55cD2E37a533C799F"
+      "address": "0xFAEE15CbBB5290c2e57163F9A3fD66aCC6c9fd19"
     },
     "qlandMarketplace": {
-      "address": "0xB0fbaA211EEFDf2996C733973f36cD7091c8f676"
+      "address": "0x72809b45A102e7C13E28DE50B5c95fAbC057483F"
     },
     "reward": {
-      "address": "0xFd1995D9B5723E07c45aDa8c412d8e5B1FC2ABAF"
+      "address": "0x6415ABE073fCB3ac6a2f82615Afa89bbf78cB7E4"
     },
     "usdc": {
       "address": "0xe9DcE89B076BA6107Bb64EF30678efec11939234"
@@ -56,16 +56,16 @@
   "11155111": {
     "deployer": "0x553dF6ead0bB3Bd404690E751D5433d52D5aC61d",
     "main": {
-      "address": "0xB782ae398033Aea6ED47bDd6C2ae9df5820A5e6f"
+      "address": "0x51DBDf51dc0F0CF0CD8A3Cfd22AC047Eb0f74033"
     },
     "factory": {
-      "address": "0xB91Db12658965bA07C7425c4DD4faccc7142d782"
+      "address": "0x773e6bAdf585EfBe9c872248d3B0b7c963809874"
     },
     "qlandMarketplace": {
-      "address": "0x672e8632d1e75c81ceB064FbDcd57a4511cB4A18"
+      "address": "0x05aCcb0d7E8d6C612B1e1C5844bB6640b42F733E"
     },
     "reward": {
-      "address": "0x6fBb48f547ab8FeE951fA6975255A144050629cA"
+      "address": "0xC6377f56abb82eAd91fe2fE99e42704D29FDd536"
     },
     "usdc": {
       "address": "0xda9d4f9b69ac6C22e444eD9aF0CfC043b7a7f53f"
